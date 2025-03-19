@@ -1,86 +1,70 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
-  --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
+  /* Green */
+  --color-green-low: #52F7B3;     /* vibrante, menta */
+  --color-green-medium: #3CA378;  /* tom balanceado */
+  --color-green-high: #235F46;    /* escuro, sóbrio */
 
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #222222;
-  --vt-c-black-mute: #282828;
+  /* Gray */
+  --color-gray-light: #F5F5F5;    /* quase branco */
+  --color-gray-medium: #AFAFAF;   /* cinza médio */
+  --color-gray-dark: #2C2C2C;     /* quase preto */
 
-  --vt-c-indigo: #2c3e50;
+  /* Blue */
+  --color-blue-low: #8EDCF7;      /* azul claro pastel */
+  --color-blue-medium: #3C9BA3;   /* tom suave complementar ao verde */
+  --color-blue-high: #23525F;     /* tom mais profundo, combina com o green.high */
 
-  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
+  /* Purple */
+  --color-purple-low: #E0C7F7;    /* lavanda */
+  --color-purple-medium: #9B6EC3; /* roxo médio, bom para destaque */
+  --color-purple-high: #5A357A;   /* tom escuro, sofisticado */
 
-  --vt-c-text-light-1: var(--vt-c-indigo);
-  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+  /* Yellow */
+  --color-yellow-low: #FFF8CC;    /* tom bem suave */
+  --color-yellow-medium: #F7C452; /* vibrante, ótimo para atenção */
+  --color-yellow-high: #8A6A1F;   /* tom amadeirado para contraste */
+
+  /* Red */
+  --color-red-low: #F7B3B3;       /* rosa claro, amigável */
+  --color-red-medium: #D94B4B;    /* alerta sem ser agressivo */
+  --color-red-high: #6E1C1C;      /* forte, para erro/crítico */
 }
-
-/* semantic color variables for this project */
-:root {
-  --color-background: var(--vt-c-white);
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
-
-  --color-border: var(--vt-c-divider-light-2);
-  --color-border-hover: var(--vt-c-divider-light-1);
-
-  --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
-
-  --section-gap: 160px;
-}
-
+/*
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
+    --color-gray-light: #2C2C2C;   
+    --color-gray-medium: #7A7A7A;  
+    --color-gray-dark: #F5F5F5; 
 
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
+    --color-green-low: #3CA378;
+    --color-green-medium: #52F7B3;
+    --color-green-high: #8EF5CF;
 
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
+    --color-blue-low: #3C9BA3;
+    --color-blue-medium: #8EDCF7;
+    --color-blue-high: #B0EAF9;
+
+    --color-purple-low: #9B6EC3;
+    --color-purple-medium: #E0C7F7;
+    --color-purple-high: #D8B6F5;
+
+    --color-yellow-low: #F7C452;
+    --color-yellow-medium: #FFF8CC;
+    --color-yellow-high: #FFD765;
+
+    --color-red-low: #D94B4B;
+    --color-red-medium: #F7B3B3;
+    --color-red-high: #FF7676;
   }
 }
+*/
 
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+  padding: 0;
   margin: 0;
+  box-sizing: border-box;
   font-weight: normal;
-}
-
-body {
-  min-height: 100vh;
-  color: var(--color-text);
-  background: var(--color-background);
-  transition:
-    color 0.5s,
-    background-color 0.5s;
-  line-height: 1.6;
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    sans-serif;
-  font-size: 15px;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }

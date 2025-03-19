@@ -1,85 +1,110 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <main class="main">
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <header>
+      <div class="logo">
+        <img alt="Grana Flow logo" src="@/assets/logo.png" width="200" height="200" />
+        <h1 class="logo-text">Grana<span>Flow</span></h1>
+      </div>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
+      <div class="label-info">
+        <h2>Controle suas finanças</h2>
+        <span>Pessoais e Empresariais.</span>
+      </div>
+    </header>
 
-  <RouterView />
+    <nav>
+      <button class="btn-provider">
+        <img alt="google logo" src="@/assets/Google.png" width="30" height="30" />
+        <span>Entrar com Google</span>
+      </button>
+    </nav>
+
+  </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+.main {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom, 
+    var(--color-green-high), 
+    var(--color-green-medium)
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem 0;
+  gap: 10rem
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.logo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 2rem 0;
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
+.logo-text{
+  font-family: 'Playwrite', sans-serif;
+}
+
+.logo-text span{
+  color: var(--color-green-low);
+}
+
+.label-info{
+  gap: 1rem;
   text-align: center;
-  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+.label-info h2{
+  font-family: 'Playwrite', sans-serif;
+  font-size: 2rem;
+  line-height: 2.5rem;
+  color: var(--color-green-low);
+  text-shadow: 0px 5px 5px var(--color-green-high);
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
+.label-info span{
+  font-family: 'Playwrite', sans-serif;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: #fff;
+  text-shadow: 0px 5px 5px #00000085;
 }
 
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+.btn-provider{
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background-color: #fff;
+  justify-content: center;
+  border-radius: 0.5rem;
+  padding: 0.75rem 2.5rem;
+  transition: 0.5s;
+  cursor: pointer;
+  border: none;
 }
 
-nav a:first-of-type {
-  border: 0;
+.btn-provider:hover{
+  box-shadow: 2px 5px 15px #000;
+}
+
+.btn-provider span{
+  font-size: 1.25rem;
 }
 
 @media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
 }
 </style>
