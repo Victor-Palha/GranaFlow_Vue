@@ -123,4 +123,40 @@ const amountFormatted = new Intl.NumberFormat('pt-BR', {
   stroke: #000;
   stroke-width: 1.5;
 }
+
+@media screen and (max-width: 450px) {
+    .transaction-container{
+        min-width: 250px;
+        max-width: 250px;
+        padding-bottom: 0.5rem;
+    }
+
+    .container-info{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container-info p{
+        /* font-semibold text-base text-gray-900 */
+        font-size: 0.75rem;
+        line-height: 1rem;
+        font-weight: bold;
+        color: #111827;
+    }
+
+    .container-info .subtype{
+        font-size: 0.5rem;
+        line-height: 1rem;
+        font-style: italic;
+        color: #374151;
+    }
+
+    .container-info .description{
+        /* text-sm text-gray-600 mt-1 */
+        font-size: 0.75rem;
+        line-height: 1.25rem;
+        margin-top: 0.25rem;
+        color: #4b5563;
+    }
+}
 </style>

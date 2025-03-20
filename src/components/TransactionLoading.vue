@@ -92,6 +92,33 @@
   .line-date {
     width: 48px;
   }
-  
-  </style>
+
+  @media screen and (max-width: 450px) {
+    .transactions-loading {
+      min-width: 250px;
+      max-width: 250px;
+      padding-bottom: 8px;
+    }
+
+    .line-half {
+      width: 60%;
+    }
+
+    .line-third {
+      width: 45%;
+    }
+
+    .line-three-quarter {
+      width: 70%;
+    }
+
+    .line-amount {
+      width: 50px;
+    }
+
+    .line-date {
+      width: 40px;
+    }
+  }
+</style>
   
