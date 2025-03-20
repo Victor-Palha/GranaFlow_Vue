@@ -25,7 +25,7 @@ function t(){
     <SubHeader namePage="Transações"/>
     <nav>
         <div class="options">
-            <CreateTransaction :refresh-wallets="t"/>
+            <CreateTransaction :wallet_id="wallet_id"/>
         </div>
 
         <div class="methods-container">
