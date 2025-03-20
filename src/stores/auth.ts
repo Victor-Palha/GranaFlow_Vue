@@ -19,6 +19,10 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function onLogout() {
+        const confirmedLogout = confirm("Você tem certeza que deseja sair?")
+        if(!confirmedLogout){
+            return
+        }
         LocalStoragePersistence.deleteAll()
         authState.value = { authenticated: false, user_id: null }
         router.replace('/')

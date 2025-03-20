@@ -1,4 +1,4 @@
-import { ref, watchEffect } from 'vue'
+import { ref } from 'vue'
 import { useAPI } from './useApi'
 import type { Wallet } from '@/types/wallet'
 import { AxiosError } from 'axios'
@@ -7,7 +7,6 @@ import { LocalStoragePersistence } from '@/stores/localStoragePersistence'
 export function useWallets() {
   const wallets = ref<Wallet[]>([])
   const isLoadingWallets = ref(false)
-  const trackWallets = ref(0)
 
   async function loadWallets() {
     const token = LocalStoragePersistence.getJWT()
@@ -35,12 +34,11 @@ export function useWallets() {
   }
 
   function refreshWallets() {
-    trackWallets.value++
+    loadWallets()
   }
 
-  watchEffect(() => {
-    loadWallets()
-  })
+
+  loadWallets()
 
   return {
     wallets,
