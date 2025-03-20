@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from 'radix-vue'
-import {PlusIcon, XMarkIcon} from '@heroicons/vue/24/outline'
+import {WalletIcon, XMarkIcon} from '@heroicons/vue/24/outline'
 import { ref } from 'vue';
 import { useAPI } from '@/composables/useApi';
 import { AxiosError } from 'axios';
@@ -48,11 +48,11 @@ async function handleCreateWallet(){
 
 <template>
   <DialogRoot>
-    <DialogTrigger>
+    <DialogTrigger class="btn">
         <div class="Avatar">
-            <PlusIcon class="icon"/>
+            <WalletIcon class="icon"/>
         </div>
-        <p className="AvatarLabel">Criar carteira</p>
+        <p className="AvatarLabel">Criar transação</p>
     </DialogTrigger>
     <DialogPortal>
       <DialogOverlay class="DialogOverlay" />
@@ -60,10 +60,10 @@ async function handleCreateWallet(){
         class="DialogContent"
       >
         <DialogTitle class="DialogTitle">
-          Criar nova carteira
+          Criar nova transação
         </DialogTitle>
         <DialogDescription class="DialogDescription">
-          Crie uma carteira para gerenciar suas finanças!
+          Crie uma nova transação baseado em sua renda!
         </DialogDescription>
 
         <fieldset class="Fieldset">
@@ -114,11 +114,17 @@ fieldset,
 input {
   all: unset;
 }
+.btn{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
 
 .Avatar {
-    width: 7rem;
-    height: 7rem;
-    border: 1px;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 0.5px;
     border-color: black;
     border-radius: 100%;
     display: flex;
@@ -131,15 +137,15 @@ input {
 
 .AvatarLabel {
     margin-top: 0.5rem;
-    font-size: 1.25rem /* 20px */;
-    line-height: 1.75rem;
-    color: white;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: black;
     font-weight: bold;
 }
 
 .icon {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   stroke: black; /* ícones outline usam stroke */
   stroke-width: 1.5;
   transition: 0.5s;
