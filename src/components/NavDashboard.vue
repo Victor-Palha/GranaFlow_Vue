@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
     <div class="nav-container">
-        <IconNav :title="'Transações'" :target="`#`">
+        <IconNav :title="'Transações'" :target="`/payments/${walletId}`">
             <BanknotesIcon class="icon"/>
         </IconNav>
 
