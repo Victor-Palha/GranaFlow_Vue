@@ -107,10 +107,10 @@ const amountFormatted = new Intl.NumberFormat('pt-BR', {
 }
 
 .amount-value-income{
-    border-color: var(--color-green-high);
+    color: var(--color-green-high);
 }
 .amount-value-outcome{
-    border-color: var(--color-red-high);
+    color: var(--color-red-high);
 }
 .date-transaction{
     /* text-xs text-gray-500 */
