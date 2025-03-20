@@ -10,6 +10,39 @@ import {
   DialogTrigger,
 } from 'radix-vue'
 import {PlusIcon, XMarkIcon} from '@heroicons/vue/24/outline'
+import { ref } from 'vue';
+import { useAPI } from '@/composables/useApi';
+import { AxiosError } from 'axios';
+
+const props = defineProps<{
+  refreshWallets: () => void
+}>()
+
+const name = ref('')
+const type = ref('PERSONAL')
+const isCreatingWaller = ref(false)
+
+async function handleCreateWallet(){
+    if(name.value.length < 3){
+        return alert("Por favor, dê um nome com mais de 3 letras para sua carteira")
+    }
+    const api = await useAPI();
+    if (!api) {
+        return;
+    }
+    isCreatingWaller.value = true
+    try{
+        await api.server.post("/api/wallet", {name: name.value, type: type.value})
+        name.value = ""
+        props.refreshWallets()
+    }catch(error){
+        if(error instanceof AxiosError){
+            return alert(error.response?.data.message)
+        }
+    }finally{
+      isCreatingWaller.value = false
+    }
+}
 
 </script>
 
@@ -35,12 +68,22 @@ import {PlusIcon, XMarkIcon} from '@heroicons/vue/24/outline'
 
         <fieldset class="Fieldset">
           <label class="Label" for="name"> Nome </label>
-          <input id="name" class="Input">
+          <input
+            id="name"
+            class="Input"
+            v-model="name"
+            placeholder="Digite o nome da carteira"
+          />
         </fieldset>
 
         <fieldset class="Fieldset">
           <label class="Label" for="type"> Tipo </label>
-          <select name="type" class="Select">
+          <select
+            id="type"
+            name="type"
+            class="Select"
+            v-model="type"
+          >
             <option value="PERSONAL">Pessoal</option>
             <option value="ENTERPRISE">Empresarial</option>
           </select>
@@ -48,7 +91,7 @@ import {PlusIcon, XMarkIcon} from '@heroicons/vue/24/outline'
 
         <div :style="{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }">
           <DialogClose as-child>
-            <button class="Button green">
+            <button class="Button green" @click="handleCreateWallet">
               Criar
             </button>
           </DialogClose>

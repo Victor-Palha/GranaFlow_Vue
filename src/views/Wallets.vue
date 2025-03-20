@@ -1,9 +1,17 @@
 <script setup lang="ts">
 import CreateWallet from '@/components/CreateWallet.vue';
 import Profiles from '@/components/Profiles.vue';
+import WalletLoading from '@/components/WalletLoading.vue';
+import { useWallets } from '@/composables/useWallets';
+import router from '@/router';
+
 import { ArrowRightStartOnRectangleIcon } from '@heroicons/vue/24/outline'
 
-function test(wallet_id: number){
+const { isLoadingWallets, wallets, refreshWallets } = useWallets()
+
+function handleSelectWallet(wallet_id: number){
+    // setWalletToProvider(wallet_id)
+    // router.push(`/private/home/${wallet_id}`)
     alert(wallet_id)
 }
 </script>
@@ -20,11 +28,25 @@ function test(wallet_id: number){
             <span>Centralize suas finanças em um único lugar</span>
         </div>
 
-        <nav class="wallets-container">
-            <Profiles type="PERSONAL" name="BANANNA" :id="1" :handleSelectWallet="test"/>
-            <Profiles type="yes" name="ABACAXI" :id="1" :handleSelectWallet="test"/>
-            <CreateWallet/>
-        </nav>
+        <div>
+            <div class="wallets-container" v-if="isLoadingWallets">
+                <WalletLoading />
+            </div>
+
+            <div class="wallets-container" v-else>
+                <Profiles
+                    v-for="wallet in wallets"
+                    :key="wallet.id"
+                    :type="wallet.type"
+                    :name="wallet.name"
+                    :id="wallet.id"
+                    :handleSelectWallet="handleSelectWallet"
+                />
+                <CreateWallet 
+                    :refreshWallets="refreshWallets"
+                />
+            </div>
+        </div>
     </main>
 </template>
 
