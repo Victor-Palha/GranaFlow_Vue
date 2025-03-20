@@ -1,4 +1,5 @@
 import { useAuthStore } from '@/stores/auth'
+import { storeToRefs } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -12,7 +13,10 @@ const router = createRouter({
     {
       path: '/wallets',
       name: 'Wallets',
-      component: () => import('@/views/Wallets.vue')
+      component: () => import('@/views/Wallets.vue'),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/auth/callback',
@@ -22,14 +26,17 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
   const auth = useAuthStore()
 
-  if (to.path !== '/auth/callback' && to.meta.requiresAuth && !auth.authState.authenticated) {
-    next('/')
-  } else {
-    next()
+  if (!auth.authState.authenticated && to.meta.requiresAuth) {
+    if (to.path !== '/') {
+      return next('/')
+    } else {
+      return next()
+    }
   }
-})
 
+  return next()
+})
 export default router
