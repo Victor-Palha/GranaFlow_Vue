@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Header from '@/components/Header.vue';
+import NavDashboard from '@/components/NavDashboard.vue';
 import { useDashboard } from '@/composables/useDashboard';
 import { useRoute } from 'vue-router'
 
@@ -13,6 +14,7 @@ const groupedTransactions = groupTransactionsByMonth(transactions.value);
 
 <template>
     <Header :total="currentBalance"/>
+    <NavDashboard :wallet-id="wallet_id"/>
     <main>
         
     </main>

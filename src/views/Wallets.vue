@@ -65,7 +65,7 @@ function handleSelectWallet(wallet_id: number){
 .icon {
   width: 40px;
   height: 40px;
-  stroke: #fff; /* ícones outline usam stroke */
+  stroke: #fff;
   stroke-width: 1.5;
   transition: 0.5s;
 }
