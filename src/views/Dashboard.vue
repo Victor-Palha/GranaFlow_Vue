@@ -2,6 +2,7 @@
 import Header from '@/components/Header.vue';
 import NavDashboard from '@/components/NavDashboard.vue';
 import Transaction from "@/components/Transaction.vue";
+import TransactionLoading from "@/components/TransactionLoading.vue";
 import { useDashboard } from '@/composables/useDashboard';
 import { useRoute } from 'vue-router'
 
@@ -16,13 +17,20 @@ const {currentBalance, isTransactionsLoading, transactions} = useDashboard()
     <NavDashboard :wallet-id="wallet_id"/>
     <main>
         <h2>Últimas Transações</h2>
-        <div v-for="(transactions, monthYear) in transactions" :key="monthYear" class="container-transactions">
+        <div v-if="!isTransactionsLoading" v-for="(transactions, monthYear) in transactions" :key="monthYear" class="container-transactions">
             <p>{{ monthYear }}</p>
             <Transaction
                 v-for="transaction in transactions"
                 :key="transaction.id"
                 :data="transaction"
             />
+        </div>
+        <div v-else class="container-transactions">
+            <TransactionLoading/>
+            <TransactionLoading/>
+            <TransactionLoading/>
+            <TransactionLoading/>
+            <TransactionLoading/>
         </div>
     </main>
 </template>
