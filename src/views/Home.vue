@@ -10,8 +10,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="main">
-
+  <main class="main-container main">
     <header>
       <div class="logo">
         <img alt="Grana Flow logo" src="@/assets/logo.png" width="200" height="200" />
@@ -36,14 +35,6 @@ onMounted(() => {
 
 <style scoped>
 .main {
-  height: 100vh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(to bottom, 
-    var(--color-green-high), 
-    var(--color-green-medium)
-  );
   display: flex;
   flex-direction: column;
   align-items: center;
