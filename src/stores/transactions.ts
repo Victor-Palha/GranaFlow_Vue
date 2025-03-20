@@ -17,7 +17,7 @@ export const useTransactionStore = defineStore('transactions', ()=>{
         try {
             const response = await api.server.get("/api/transaction", {
                 params: {
-                    wallet_id: walletId,
+                    wallet_id: walletId.value,
                     limit: null,
                     is_until_today: true
                 }

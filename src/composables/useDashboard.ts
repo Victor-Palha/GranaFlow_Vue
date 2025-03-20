@@ -1,15 +1,16 @@
 import { MONTHS } from "@/constants/MONTHS";
 import { useTransactionStore } from "@/stores/transactions";
 import type { Transaction } from "@/types/transactions";
+import { storeToRefs } from "pinia";
 import { onMounted, ref, watch } from "vue";
 
 export function useDashboard(){
     const transactionsStore = useTransactionStore()
     onMounted(()=>{
-        transactionsStore.fetchTransactions()
-        calculateCurrentBalance(transactionsStore.myTransactions)
+      transactionsStore.fetchTransactions()
     })
-
+    
+    const { myTransactions, isTransactionsLoading } = storeToRefs(transactionsStore)
     const currentBalance = ref(0.0)
 
     function calculateCurrentBalance(transactions: Transaction[]) {
@@ -44,14 +45,14 @@ export function useDashboard(){
         }, {});
     }
 
-    watch(transactionsStore.myTransactions, ()=>{
-        calculateCurrentBalance(transactionsStore.myTransactions)
+    watch(myTransactions, ()=>{
+        calculateCurrentBalance(myTransactions.value)
     })
 
     return {
-        transactions: transactionsStore.myTransactions,
+        transactions: myTransactions,
         currentBalance,
-        isTransactionsLoading: transactionsStore.isTransactionsLoading,
+        isTransactionsLoading,
         groupTransactionsByMonth
     }
 }

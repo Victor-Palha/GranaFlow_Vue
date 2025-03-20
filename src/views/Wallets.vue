@@ -5,23 +5,25 @@ import WalletLoading from '@/components/WalletLoading.vue';
 import { useWallets } from '@/composables/useWallets';
 import router from '@/router';
 import { useAuthStore } from '@/stores/auth';
+import { useTransactionStore } from '@/stores/transactions';
 import { ArrowRightStartOnRectangleIcon } from '@heroicons/vue/24/outline'
 
 const {onLogout} = useAuthStore()
+const {setWalletToProvider} = useTransactionStore()
 const { isLoadingWallets, wallets, refreshWallets } = useWallets()
 
 function handleSelectWallet(wallet_id: number){
-    // setWalletToProvider(wallet_id)
-    // router.push(`/private/home/${wallet_id}`)
-    alert(wallet_id)
+    setWalletToProvider(wallet_id)
+    router.push(`/dashboard/${wallet_id}`)
 }
+
 </script>
 
 <template>
     <main class="main-container">
         <header class="header">
             <img alt="Grana Flow logo" src="@/assets/logo.png" width="70" height="70" />
-            <ArrowRightStartOnRectangleIcon class="icon" @click="onLogout"/>
+            <ArrowRightStartOnRectangleIcon class="back" @click="onLogout"/>
         </header>
 
         <div class="container-info">

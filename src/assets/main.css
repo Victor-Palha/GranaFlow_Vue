@@ -27,6 +27,32 @@
   );
 }
 
+.back {
+  width: 40px;
+  height: 40px;
+  stroke: #fff; /* ícones outline usam stroke */
+  stroke-width: 1.5;
+  transition: 0.5s;
+}
+
+.back:hover{
+    stroke: var(--color-red-medium);
+    transform: scale(1.1);
+    filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.4));
+}
+
 body{
   font-family: sans-serif;
+}
+
+@keyframes pulse {
+  0% {
+      opacity: 1;
+  }
+  50% {
+      opacity: 0.4;
+  }
+  100% {
+      opacity: 1;
+  }
 }

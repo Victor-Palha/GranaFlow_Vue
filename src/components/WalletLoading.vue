@@ -58,18 +58,5 @@
     background-color: #d1d5db; /* gray-300 equivalent */
     border-radius: 8px;
   }
-  
-  /* Pulsing animation */
-  @keyframes pulse {
-    0% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  </style>
+</style>
   
