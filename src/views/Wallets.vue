@@ -68,4 +68,11 @@ function test(wallet_id: number){
     gap: 1.25rem;
     margin-top: 1.25rem;
 }
+
+@media screen and (min-width: 871px) {
+    .wallets-container{
+        flex-direction: row;
+        justify-content: center;
+    }
+}
 </style>
