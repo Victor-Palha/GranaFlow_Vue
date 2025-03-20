@@ -11,6 +11,11 @@ const router = createRouter({
       component: () => import('@/views/Home.vue')
     },
     {
+      path: '/auth/callback',
+      name: 'OAuthCallback',
+      component: () => import('@/views/OAuthCallback.vue')
+    },
+    {
       path: '/wallets',
       name: 'Wallets',
       component: () => import('@/views/Wallets.vue'),
@@ -19,10 +24,13 @@ const router = createRouter({
       }
     },
     {
-      path: '/auth/callback',
-      name: 'OAuthCallback',
-      component: () => import('@/views/OAuthCallback.vue')
-    }
+      path: '/dashboard/:id',
+      name: 'Dashboard',
+      component: () => import('@/views/Dashboard.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
   ],
 })
 

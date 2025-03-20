@@ -26,3 +26,7 @@
     var(--color-green-medium)
   );
 }
+
+body{
+  font-family: sans-serif;
+}
