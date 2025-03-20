@@ -43,6 +43,7 @@
 
 body{
   font-family: sans-serif;
+  background-color: #e5e7eb;
 }
 
 @keyframes pulse {

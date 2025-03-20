@@ -12,6 +12,7 @@ export function useDashboard(){
     
     const { myTransactions, isTransactionsLoading } = storeToRefs(transactionsStore)
     const currentBalance = ref(0.0)
+    const transactionsSeparedByMonths = ref<Record<string, Transaction[]>>({})
 
     function calculateCurrentBalance(transactions: Transaction[]) {
         const current_balance = transactions.reduce((acc, transaction) => {
@@ -30,7 +31,7 @@ export function useDashboard(){
     }
 
     function groupTransactionsByMonth(transactions: Transaction[]) {
-        return transactions.reduce<Record<string, Transaction[]>>((acc, transaction) => {
+        const transactionsSepared = transactions.reduce<Record<string, Transaction[]>>((acc, transaction) => {
           const date = new Date(transaction.transaction_date);
           const month = date.getMonth() + 1;
           const year = date.getFullYear();
@@ -43,14 +44,16 @@ export function useDashboard(){
           acc[label].push(transaction);
           return acc;
         }, {});
+        transactionsSeparedByMonths.value = transactionsSepared
     }
 
     watch(myTransactions, ()=>{
         calculateCurrentBalance(myTransactions.value)
+        groupTransactionsByMonth(myTransactions.value)
     })
 
     return {
-        transactions: myTransactions,
+        transactions: transactionsSeparedByMonths,
         currentBalance,
         isTransactionsLoading,
         groupTransactionsByMonth

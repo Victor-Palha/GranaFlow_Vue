@@ -62,20 +62,6 @@ function handleSelectWallet(wallet_id: number){
     justify-content: space-between;
 }
 
-.icon {
-  width: 40px;
-  height: 40px;
-  stroke: #fff;
-  stroke-width: 1.5;
-  transition: 0.5s;
-}
-
-.icon:hover{
-    stroke: var(--color-red-medium);
-    transform: scale(1.1);
-    filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.4));
-}
-
 .container-info{
     margin-top: 5rem;
     display: flex;
