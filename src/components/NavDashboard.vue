@@ -13,7 +13,7 @@ defineProps<{
             <BanknotesIcon class="icon"/>
         </IconNav>
 
-        <IconNav :title="'Relatórios'" :target="`#`">
+        <IconNav :title="'Relatórios'" :target="`/reports/${walletId}`">
             <ChartBarIcon class="icon"/>
         </IconNav>
     </div>
