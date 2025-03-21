@@ -8,6 +8,7 @@ const props = defineProps<{
   data: AnuualReports[];
   walletId: string | string[];
   year: number;
+  handleSelectMonth: (month: number) => void;
 }>();
 
 const chartOptions = ref({});
@@ -43,6 +44,13 @@ function prepareChartData() {
             type: 'bar',
             height: 350,
             toolbar: { show: true },
+            events: {
+                dataPointSelection: (event: MouseEvent, chartContext: any, config: any) => {
+                    const index = config.dataPointIndex;
+                    const selectedMonth = parseInt(index+1);
+                    props.handleSelectMonth(selectedMonth);
+                }
+            }
         },
         plotOptions: {
             bar: {
@@ -76,7 +84,7 @@ function prepareChartData() {
                 formatter: (val: number) => `R$ ${val.toFixed(2)}`,
             },
         }
-    };
+    }
 }
 
 watch(() => props.data, prepareChartData, { immediate: true });

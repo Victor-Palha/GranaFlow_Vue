@@ -1,12 +1,21 @@
 <script setup lang="ts">
 import AnnualReportChart from '@/components/AnnualReportChart.vue';
+import MonthlyReportInfo from '@/components/MonthlyReportInfo.vue';
 import SubHeader from '@/components/SubHeader.vue';
 import { useReports } from '@/composables/useReports';
 import { useRoute } from 'vue-router';
 const route = useRoute()
 const wallet_id = route.params.id
 
-const {availableYears, handleSelectYear, yearReport, yearSelected} = useReports(wallet_id)
+const {
+    availableYears,
+    yearReport,
+    yearSelected,
+    monthReport,
+    selectedMonth,
+    handleSelectYear,
+    handleSelectMonth,
+} = useReports(wallet_id)
 
 function onYearChange(event: Event) {
     const target = event.target as HTMLSelectElement;
@@ -34,7 +43,19 @@ function onYearChange(event: Event) {
         </select>
     </nav>
     <main>
-        <AnnualReportChart :data="yearReport" :wallet-id="wallet_id" :year="yearSelected"/>
+        <AnnualReportChart 
+            :data="yearReport"
+            :wallet-id="wallet_id"
+            :year="yearSelected"
+            :handle-select-month="handleSelectMonth"
+        />
+
+        <aside v-if="monthReport">
+            <MonthlyReportInfo
+                :month-report="monthReport"
+                :month="selectedMonth || 0"
+            />
+        </aside>
     </main>
 </template>
 

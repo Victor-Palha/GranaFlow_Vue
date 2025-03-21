@@ -41,7 +41,7 @@ const amountFormatted = new Intl.NumberFormat('pt-BR', {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    min-width: 400px;
+    min-width: 500px;
     padding-bottom: 0.75rem;
 }
 
@@ -92,6 +92,7 @@ const amountFormatted = new Intl.NumberFormat('pt-BR', {
     line-height: 1.25rem;
     margin-top: 0.25rem;
     color: #4b5563;
+    overflow: hidden;
 }
 
 .amount-container{
@@ -99,6 +100,7 @@ const amountFormatted = new Intl.NumberFormat('pt-BR', {
     flex-direction: column;
     align-items: end;
     margin-left: 0.75rem;
+    width: 100%;
 }
 
 .amount-value{
@@ -124,7 +126,7 @@ const amountFormatted = new Intl.NumberFormat('pt-BR', {
   stroke-width: 1.5;
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 560px) {
     .transaction-container{
         min-width: 250px;
         max-width: 250px;
