@@ -54,6 +54,7 @@ function onYearChange(event: Event) {
             <MonthlyReportInfo
                 :month-report="monthReport"
                 :month="selectedMonth || 0"
+                :year-report="yearReport[selectedMonth - 1]"
             />
         </aside>
     </main>

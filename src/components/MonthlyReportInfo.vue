@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MonthReport } from '@/types/reports';
+import type { AnuualReports, MonthReport } from '@/types/reports';
 import type { Transaction } from '@/types/transactions';
 import { ref, watch } from 'vue';
 import T from './Transaction.vue';
@@ -7,7 +7,8 @@ import { MONTHS } from '@/constants/MONTHS';
 
 const props = defineProps<{
     monthReport: MonthReport
-    month: number
+    month: number,
+    yearReport: AnuualReports
 }>()
 
 const selectedSubtype = ref<string | null>(null)
@@ -21,7 +22,6 @@ function selectTransactionsBySubtype(subtype: string) {
         acc[transaction.subtype].push(transaction);
         return acc;
     }, {});
-    console.log(grouped)
     
     selectedTransactionsBasedOnSubtype.value = (grouped[subtype] ?? []);
 }
@@ -56,14 +56,14 @@ watch(props.monthReport, ()=>{
         <div class="report-row">
             <p class="label">Entradas:</p>
             <p class="green-text">
-            R$ {{ parseFloat(props.monthReport.total_income).toFixed(2) }}
+            R$ {{ parseFloat(props.yearReport.income).toFixed(2) }}
             </p>
         </div>
     
         <div class="report-row">
             <p class="label">Saídas:</p>
             <p class="red-text">
-            R$ {{ parseFloat(props.monthReport.total_outcome).toFixed(2) }}
+            R$ {{ parseFloat(props.yearReport.outcome).toFixed(2) }}
             </p>
         </div>
     
@@ -73,12 +73,12 @@ watch(props.monthReport, ()=>{
             </p>
             <p
             :class="[
-                parseFloat(props.monthReport.final_balance) <= 0
+                parseFloat(props.yearReport.final_balance) <= 0
                 ? 'red-text'
                 : 'green-text',
             ]"
             >
-            R$ {{ parseFloat(props.monthReport.final_balance).toFixed(2) }}
+            R$ {{ parseFloat(props.yearReport.final_balance).toFixed(2) }}
             </p>
         </div>
   

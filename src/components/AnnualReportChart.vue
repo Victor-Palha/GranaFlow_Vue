@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { MONTHS } from '@/constants/MONTHS';
 import type { AnuualReports } from '@/types/reports';
-import { ref, watch, onMounted, onUnmounted } from 'vue';
+import { ref, watch } from 'vue';
 import ApexCharts from 'vue3-apexcharts';
 
 const props = defineProps<{
@@ -17,7 +17,6 @@ const series = ref<{ name: string, data: number[] }[]>([]);
 function prepareChartData() {
   const incomeSeries = props.data.map((r) => parseFloat(r.income));
   const outcomeSeries = props.data.map((r) => parseFloat(r.outcome));
-
   series.value = [
     {
       name: 'Entradas',

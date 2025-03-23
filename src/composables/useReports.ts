@@ -8,7 +8,7 @@ export function useReports(wallet_id: string | string[]){
     const yearSelected = ref(currentYear)
     const yearReport = ref<AnuualReports[]>([])
     const monthReport = ref<MonthReport | null>(null)
-    const selectedMonth = ref<number | null>(null)
+    const selectedMonth = ref<number>(0)
         
     async function getAnnualReports() {
         const api = await useAPI();
