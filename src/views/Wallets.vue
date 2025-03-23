@@ -10,15 +10,17 @@ import { useTransactionStore } from '@/stores/transactions';
 import { ArrowRightStartOnRectangleIcon } from '@heroicons/vue/24/outline'
 import { onMounted, ref } from 'vue';
 
-const {onLogout} = useAuthStore()
+const {onLogout, getUserProfile} = useAuthStore()
 const {setWalletToProvider} = useTransactionStore()
 const { isLoadingWallets, wallets, refreshWallets } = useWallets()
 
-
+const user = getUserProfile()
 const isModalOpen = ref(false)
 
 onMounted(() => {
-  isModalOpen.value = true
+    if(!user?.is_premium){
+        isModalOpen.value = true
+    }
 })
 
 function handleCloseModal() {

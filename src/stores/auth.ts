@@ -49,11 +49,16 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
+    function getUserProfile(){
+        return LocalStoragePersistence.getUserProfile()
+    }
+
     return {
         authState,
         isLoading,
         onLogin,
         onLogout,
-        validateAuth
+        validateAuth,
+        getUserProfile
     }
 })

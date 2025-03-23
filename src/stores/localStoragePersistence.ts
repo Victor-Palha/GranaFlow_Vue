@@ -3,6 +3,7 @@ export type UserProfile = {
     email: string,
     name: string,
     avatar_url: string,
+    is_premium: boolean,
   };
   
 export class LocalStoragePersistence {
@@ -13,6 +14,7 @@ export class LocalStoragePersistence {
         USERPHOTO: "granaFlow.userPhoto",
         JWT_TOKEN: "granaFlow.jwt",
         JWT_REFRESH_TOKEN: "granaFlow.refresh.jwt",
+        IS_PREMIUM:  "granaFlow.isPremium",
     }
   
     static setUserProfile(userProfile: UserProfile): void {
@@ -27,9 +29,14 @@ export class LocalStoragePersistence {
         const email = window.localStorage.getItem(this.KEYS.USEREMAIL)
         const name = window.localStorage.getItem(this.KEYS.USERNAME)
         const avatar_url = window.localStorage.getItem(this.KEYS.USERPHOTO)
+        const premium = window.localStorage.getItem(this.KEYS.IS_PREMIUM)
   
-        if (id && email && name && avatar_url) {
-            return { id, email, name, avatar_url }
+        if (id && email && name && avatar_url && premium) {
+            let premiumParsed = false
+            if(premium == "true"){
+                premiumParsed = true
+            }
+            return { id, email, name, avatar_url, is_premium: premiumParsed }
         }
   
         return null
@@ -70,6 +77,23 @@ export class LocalStoragePersistence {
   
     static getUserId(): string | null {
         return window.localStorage.getItem(this.KEYS.USERID)
+    }
+
+    static setIsPremium(value: string) {
+        window.localStorage.setItem(this.KEYS.IS_PREMIUM, value)
+    }
+
+    static getIsPremium(): boolean | null {
+        const value = window.localStorage.getItem(this.KEYS.IS_PREMIUM)
+        console.log(value)
+        if(value){
+            if(value == "true"){
+                return true
+            }else{
+                return false
+            }
+        }
+        return null
     }
   }
   

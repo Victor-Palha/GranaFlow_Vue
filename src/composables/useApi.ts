@@ -14,9 +14,10 @@ export async function useAPI() {
     
     try {
         const response = await API.server.get("/refresh/");
-        const { token, refresh_token } = response.data;
+        const { token, refresh_token, is_premium } = response.data;
         LocalStoragePersistence.setJWT(token);
         LocalStoragePersistence.setRefreshJWT(refresh_token);
+        LocalStoragePersistence.setIsPremium(is_premium)
 
         API.setTokenAuth(token);
 
