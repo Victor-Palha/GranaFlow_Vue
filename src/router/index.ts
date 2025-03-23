@@ -1,5 +1,4 @@
 import { useAuthStore } from '@/stores/auth'
-import { storeToRefs } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -47,6 +46,14 @@ const router = createRouter({
         requiresAuth: true
       }
     },
+    {
+      path: '/account/:result(success|error|pending)',
+      name: 'PaymentResult',
+      component: () => import('@/views/PaymentResultPage.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    }
   ],
 })
 

@@ -2,15 +2,28 @@
 import CreateWallet from '@/components/CreateWallet.vue';
 import Profiles from '@/components/Profiles.vue';
 import WalletLoading from '@/components/WalletLoading.vue';
+import UpgradeAccount from '@/components/UpgradeAccount.vue';
 import { useWallets } from '@/composables/useWallets';
 import router from '@/router';
 import { useAuthStore } from '@/stores/auth';
 import { useTransactionStore } from '@/stores/transactions';
 import { ArrowRightStartOnRectangleIcon } from '@heroicons/vue/24/outline'
+import { onMounted, ref } from 'vue';
 
 const {onLogout} = useAuthStore()
 const {setWalletToProvider} = useTransactionStore()
 const { isLoadingWallets, wallets, refreshWallets } = useWallets()
+
+
+const isModalOpen = ref(false)
+
+onMounted(() => {
+  isModalOpen.value = true
+})
+
+function handleCloseModal() {
+  isModalOpen.value = false
+}
 
 function handleSelectWallet(wallet_id: number){
     setWalletToProvider(wallet_id)
@@ -51,6 +64,12 @@ function handleSelectWallet(wallet_id: number){
             </div>
         </div>
     </main>
+
+    <template v-if="isModalOpen">
+        <UpgradeAccount
+            :handle-close="handleCloseModal"
+        />
+    </template>
 </template>
 
 <style scoped>
