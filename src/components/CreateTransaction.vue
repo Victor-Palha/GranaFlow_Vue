@@ -263,192 +263,224 @@ async function createRecurrentTransaction(api: typeof API) {
 
 
 <style scoped>
-button,
-fieldset,
-input {
+button, fieldset, input, select {
   all: unset;
+  box-sizing: border-box;
 }
 
-.btn{
+.btn {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
 }
 
 .Avatar {
-    width: 3.5rem;
-    height: 3.5rem;
-    border: 0.5px;
-    border-color: black;
-    border-radius: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-style: dashed;
-    background-color: var(--color-green-medium);
-    box-shadow: 0px 2px 5px black;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px dashed var(--color-gray-medium);
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-green-medium);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.Avatar:hover {
+  background-color: var(--color-green-low);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .AvatarLabel {
-    margin-top: 0.5rem;
-    font-size: 0.75rem;
-    line-height: 1rem;
-    color: black;
-    font-weight: bold;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-gray-dark);
 }
 
 .icon {
-  width: 30px;
-  height: 30px;
-  stroke: black; /* ícones outline usam stroke */
-  stroke-width: 1.5;
-  transition: 0.5s;
+  width: 24px;
+  height: 24px;
+  stroke: var(--color-gray-dark);
+  stroke-width: 2;
+  transition: all 0.3s ease;
 }
 
 .DialogOverlay {
-  background-color: var(--color-gray-bg);
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
   position: fixed;
   inset: 0;
   animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1000;
 }
 
 .DialogContent {
   background-color: white;
-  border-radius: 6px;
-  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 90vw;
   max-width: 450px;
-  padding: 25px;
+  max-height: 85vh;
+  padding: 1.5rem;
   animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-.DialogContent:focus {
-  outline: none;
+  overflow-y: auto;
+  z-index: 1001;
 }
 
 .DialogTitle {
   margin: 0;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-gray-dark);
-  font-size: 17px;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .DialogDescription {
-  margin: 10px 0 20px;
+  margin: 0 0 1.5rem;
   color: var(--color-gray-medium);
-  font-size: 15px;
+  font-size: 0.875rem;
   line-height: 1.5;
 }
 
 .IconButton {
   font-family: inherit;
   border-radius: 100%;
-  height: 25px;
-  width: 25px;
+  height: 30px;
+  width: 30px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-green-high);
+  color: var(--color-gray-medium);
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 12px;
+  right: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
+
 .IconButton:hover {
-  background-color: var(--color-green-high);
-}
-.IconButton:focus {
-  box-shadow: 0 0 0 2px var(--color-green-medium);
+  background-color: var(--color-gray-bg);
+  color: var(--color-gray-dark);
 }
 
 .Fieldset {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  align-items: start;
-  margin-bottom: 15px;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
 }
 
 .Label {
-  font-size: 15px;
-  color: var(--color-green-medium);
-  text-align: right;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-gray-dark);
 }
 
-.Input {
-  width: 90%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  padding: 10px 20px;
-  font-size: 15px;
-  line-height: 1;
-  color: var(--color-green-medium);
-  box-shadow: 0 0 0 1px var(--color-green-medium);
+.Input, .Select {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 0.9375rem;
+  color: var(--color-gray-dark);
+  border: 1px solid var(--color-gray-bg);
+  border-radius: 6px;
+  background-color: white;
+  transition: all 0.2s ease;
 }
-.Input:focus {
-  box-shadow: 0 0 0 2px var(--color-green-medium);
+
+.Input:focus, .Select:focus {
+  outline: none;
+  border-color: var(--color-green-medium);
+  box-shadow: 0 0 0 2px rgba(var(--color-green-rgb), 0.2);
 }
 
 .Select {
-  width: 100%;
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  padding: 10px 20px;
-  font-size: 15px;
-  line-height: 1;
-  color: var(--color-green-medium);
-  box-shadow: 0 0 0 1px var(--color-green-medium);
-  height: 35px;
-  background-color: transparent;
-  border: none;
   appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
   cursor: pointer;
 }
 
-.Select:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--color-green-medium);
+.SwitchRoot {
+  width: 42px;
+  height: 24px;
+  background-color: var(--color-gray-bg);
+  border-radius: 9999px;
+  position: relative;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  margin-left: auto;
+}
+
+.SwitchRoot[data-state='checked'] {
+  background-color: var(--color-green-medium);
+}
+
+.SwitchThumb {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 9999px;
+  transition: transform 100ms;
+  transform: translateX(2px);
+  will-change: transform;
+}
+
+.SwitchThumb[data-state='checked'] {
+  transform: translateX(20px);
 }
 
 .Button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
-  padding: 0 15px;
-  font-size: 15px;
-  line-height: 1;
+  border-radius: 6px;
+  padding: 0 1.25rem;
+  font-size: 0.9375rem;
   font-weight: 500;
-  height: 35px;
+  height: 40px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
+
 .Button.green {
   background-color: var(--color-green-medium);
   color: white;
 }
-.Button.green:hover {
+
+.Button.green:hover:not(:disabled) {
   background-color: var(--color-green-low);
 }
+
 .Button.green:focus {
   box-shadow: 0 0 0 2px var(--color-green-high);
 }
 
+.Button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Animações */
 @keyframes overlayShow {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes contentShow {
@@ -459,6 +491,22 @@ input {
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@media (max-width: 480px) {
+  .DialogContent {
+    padding: 1.25rem;
+    width: 95vw;
+  }
+  
+  .Input, .Select {
+    padding: 0.625rem;
+  }
+  
+  .Button {
+    height: 36px;
+    font-size: 0.875rem;
   }
 }
 </style>
