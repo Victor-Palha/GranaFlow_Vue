@@ -23,7 +23,7 @@ const amountFormatted = new Intl.NumberFormat('pt-BR', {
             </div>
 
             <div class="container-info">
-                <p>{{props.data.name}}</p>
+                <p class="transaction-name">{{props.data.name}}</p>
                 <span class="subtype">{{props.data.subtype}}</span>
                 <span class="description">{{props.data.description}}</span>
             </div>
@@ -37,128 +37,154 @@ const amountFormatted = new Intl.NumberFormat('pt-BR', {
 </template>
 
 <style scoped>
-.transaction-container{
+.transaction-container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    min-width: 500px;
-    padding-bottom: 0.75rem;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    width: 100%;
+    max-width: 100%;
 }
 
 .left-container {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.75rem;
-    width: 100%;
+    flex: 1;
+    min-width: 0; /* Permite que o texto quebre corretamente */
 }
 
-.icons-container{
+.icons-container {
     display: flex;
     border-radius: 100%;
     padding: 0.75rem;
-    border: 0.5px;
+    flex-shrink: 0;
 }
 
-.icons-income{
-    border-color: var(--color-green-high);
+.icons-income {
     background-color: var(--color-green-medium);
+    border: 0.5px solid var(--color-green-high);
 }
-.icons-outcome{
-    border-color: var(--color-red-high);
+
+.icons-outcome {
     background-color: var(--color-red-medium);
+    border: 0.5px solid var(--color-red-high);
 }
 
-.container-info{
+.container-info {
     display: flex;
     flex-direction: column;
+    min-width: 0; /* Permite que o texto quebre corretamente */
 }
 
-.container-info p{
-    /* font-semibold text-base text-gray-900 */
-    font-weight: bold;
+.transaction-name {
+    font-weight: 600;
+    font-size: 1rem;
     color: #111827;
+    margin-bottom: 0.25rem;
+    word-break: break-word;
 }
 
-.container-info .subtype{
+.subtype {
     font-size: 0.75rem;
-    line-height: 1rem;
-    font-style: italic;
     color: #374151;
+    font-style: italic;
+    margin-bottom: 0.25rem;
 }
 
-.container-info .description{
-    /* text-sm text-gray-600 mt-1 */
+.description {
     font-size: 0.875rem;
-    line-height: 1.25rem;
-    margin-top: 0.25rem;
     color: #4b5563;
-    overflow: hidden;
+    word-break: break-word;
 }
 
-.amount-container{
+.amount-container {
     display: flex;
     flex-direction: column;
-    align-items: end;
-    margin-left: 0.75rem;
-    width: 100%;
+    align-items: flex-end;
+    flex-shrink: 0;
+    margin-left: auto;
+    text-align: right;
 }
 
-.amount-value{
-    font-weight: bold;
-    margin-bottom: 1rem;
+.amount-value {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
 }
 
-.amount-value-income{
+.amount-value-income {
     color: var(--color-green-high);
 }
-.amount-value-outcome{
+
+.amount-value-outcome {
     color: var(--color-red-high);
 }
-.date-transaction{
-    /* text-xs text-gray-500 */
+
+.date-transaction {
     font-size: 0.75rem;
     color: #6b7280;
 }
+
 .icon {
-  width: 20px;
-  height: 20px;
-  stroke: #000;
-  stroke-width: 1.5;
+    width: 20px;
+    height: 20px;
+    stroke: #000;
+    stroke-width: 1.5;
 }
 
-@media screen and (max-width: 560px) {
-    .transaction-container{
-        min-width: 250px;
-        max-width: 250px;
-        padding-bottom: 0.5rem;
+@media screen and (max-width: 768px) {
+    .transaction-container {
+        gap: 0.75rem;
+        padding: 0.5rem 0;
     }
-
-    .container-info{
-        display: flex;
-        flex-direction: column;
+    
+    .icons-container {
+        padding: 0.5rem;
     }
-
-    .container-info p{
-        /* font-semibold text-base text-gray-900 */
+    
+    .transaction-name {
+        font-size: 0.875rem;
+    }
+    
+    .description {
         font-size: 0.75rem;
-        line-height: 1rem;
-        font-weight: bold;
-        color: #111827;
     }
-
-    .container-info .subtype{
-        font-size: 0.5rem;
-        line-height: 1rem;
-        font-style: italic;
-        color: #374151;
+    
+    .amount-value {
+        font-size: 0.875rem;
     }
+}
 
-    .container-info .description{
-        /* text-sm text-gray-600 mt-1 */
-        font-size: 0.75rem;
-        line-height: 1.25rem;
-        margin-top: 0.25rem;
-        color: #4b5563;
+@media screen and (max-width: 480px) {
+    .left-container {
+        gap: 0.5rem;
+    }
+    
+    .transaction-name {
+        font-size: 0.8125rem;
+    }
+    
+    .subtype {
+        font-size: 0.6875rem;
+    }
+    
+    .description {
+        font-size: 0.6875rem;
+    }
+    
+    .amount-value {
+        font-size: 0.8125rem;
+    }
+    
+    .date-transaction {
+        font-size: 0.6875rem;
+    }
+    
+    .icon {
+        width: 18px;
+        height: 18px;
     }
 }
 </style>
