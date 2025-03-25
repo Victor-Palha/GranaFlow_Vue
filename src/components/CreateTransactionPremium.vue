@@ -13,10 +13,17 @@ import {
 } from 'radix-vue'
 import { WalletIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { useCreateTransaction } from '@/composables/useCreateTransaction';
+import { useAPI } from '@/composables/useApi';
+import { ref } from 'vue';
+import { AxiosError } from 'axios';
 
 const props = defineProps<{
   wallet_id: string | string[]
 }>()
+
+const customSubtypes = ref<{name: string, id: number}[]>([])
+const showAddSubtype = ref(false)
+const newSubtypeName = ref<{name: string, id: number}>({name: "", id: 9999})
 
 const {
     amountTransaction,
@@ -32,6 +39,54 @@ const {
     handleCreateTransaction
 
 } = useCreateTransaction(props.wallet_id)
+
+
+async function loadCustomSubtypes() {
+    try {
+        const api = await useAPI()
+        if(!api){
+            return
+        }
+        const response = await api.server.get(`/api/premium/custom-subtypes`)
+        customSubtypes.value = response.data.custom_subtypes
+    } catch (error) {
+        console.error('Failed to load custom subtypes:', error)
+    }
+}
+
+async function addCustomSubtype() {
+  if (!newSubtypeName.value.name.trim()) {
+    alert('Por favor, insira um nome válido para o subtipo')
+    return
+  }
+
+  try {
+    const api = await useAPI()
+    if(!api) return
+
+    await api.server.post(`/api/premium/custom-subtypes`, {
+      name: newSubtypeName.value.name.trim()
+    })
+    
+    customSubtypes.value.push(newSubtypeName.value)
+    showAddSubtype.value = false
+  } catch (error) {
+    console.error('Failed to add custom subtype:', error)
+    if (error instanceof AxiosError) {
+      alert(error.response?.data.message || 'Erro ao adicionar subtipo')
+    }
+  }
+}
+
+function showSubtypeModal(){
+    showAddSubtype.value = true
+}
+
+function closeSubtypeModal(){
+    showAddSubtype.value = false
+}
+
+loadCustomSubtypes()
 
 </script>
 
@@ -65,48 +120,72 @@ const {
         </fieldset>
 
         <fieldset class="Fieldset">
-          <label class="Label" for="name">Descrição</label>
-          <input
-            id="name"
-            class="Input"
-            v-model="description"
-            placeholder="Ex: Pagamento via pix"
-          />
+            <label class="Label" for="name">Descrição</label>
+            <input
+                id="name"
+                class="Input"
+                v-model="description"
+                placeholder="Ex: Pagamento via pix"
+            />
         </fieldset>
 
         <fieldset class="Fieldset">
-          <label class="Label" for="type">Tipo de transação</label>
-          <select
-            id="type"
-            name="type"
-            class="Select"
-            v-model="typeTransaction"
-          >
-            <option value="INCOME">Entrada</option>
-            <option value="OUTCOME">Saída</option>
-          </select>
+            <label class="Label" for="type">Tipo de transação</label>
+            <select
+                id="type"
+                name="type"
+                class="Select"
+                v-model="typeTransaction"
+            >
+                <option value="INCOME">Entrada</option>
+                <option value="OUTCOME">Saída</option>
+            </select>
         </fieldset>
 
         <fieldset class="Fieldset">
-          <label class="Label" for="subtype">Subtipo da transação</label>
-          <select
-            id="subtype"
-            name="subtype"
-            class="Select"
-            v-model="subtypeTransaction"
-          >
-            <option value="FOOD">Alimentação</option>
-            <option value="HOUSING">Moradia</option>
-            <option value="TRANSPORT">Transporte</option>
-            <option value="ENTERTAINMENT">Lazer</option>
-            <option value="HEALTH">Saúde</option>
-            <option value="EDUCATION">Educação</option>
-            <option value="BILLS">Contas</option>
-            <option value="INVESTMENT">Investimentos</option>
-            <option value="WAGE">Salário</option>
-            <option value="DONATION">Doações</option>
-            <option value="OTHER">Outros</option>
-          </select>
+            <div class="Subtype">
+                <label class="Label" for="subtype">Subtipo da transação</label>
+                <button v-if="!showAddSubtype" @click="showSubtypeModal" class="OpenSubtype">Novo subtipo</button>
+
+                <button v-else @click="closeSubtypeModal" class="CloseSubtype">
+                    <XMarkIcon class="icon" />
+                </button>
+            </div>
+            <div v-if="showAddSubtype" class="Subtype-Modal">
+                <input
+                    v-model="newSubtypeName.name"
+                    class="Input"
+                    placeholder="Nome do novo subtipo"
+                />
+                <button @click="addCustomSubtype" class="Button-Add-Subtype">
+                    Adicionar
+                </button>
+            </div>
+            <select
+                id="subtype"
+                name="subtype"
+                class="Select"
+                v-model="subtypeTransaction"
+                v-if="!showAddSubtype"
+            >
+                <option 
+                    v-for="subtype in customSubtypes" 
+                    :key="subtype.id" 
+                    :value="subtype.name"
+                >
+                    {{ subtype.name }}
+                </option>
+                <option value="FOOD">Alimentação</option>
+                <option value="HOUSING">Moradia</option>
+                <option value="TRANSPORT">Transporte</option>
+                <option value="ENTERTAINMENT">Lazer</option>
+                <option value="HEALTH">Saúde</option>
+                <option value="EDUCATION">Educação</option>
+                <option value="BILLS">Contas</option>
+                <option value="INVESTMENT">Investimentos</option>
+                <option value="WAGE">Salário</option>
+                <option value="DONATION">Doações</option>
+            </select>
         </fieldset>
 
         <fieldset class="Fieldset">
@@ -395,6 +474,64 @@ button, fieldset, input, select {
   cursor: not-allowed;
 }
 
+.Subtype{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.OpenSubtype{
+    background-color: var(--color-green-medium);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    padding: 0 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    height: 35px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: white;
+    font-style: italic;
+}
+
+.OpenSubtype:hover{
+    background-color: var(--color-green-high);
+}
+
+.Subtype-Modal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.Button-Add-Subtype{
+    background-color: var(--color-green-medium);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    padding: 0 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    height: 35px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: white;
+    font-style: italic;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.CloseSubtype{
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 6px;
+
+}
+.CloseSubtype:hover{
+    background-color: var(--color-gray-light);
+}
 /* Animações */
 @keyframes overlayShow {
   from { opacity: 0; }

@@ -1,31 +1,35 @@
 <script setup lang="ts">
 import CreateTransaction from '@/components/CreateTransaction.vue';
+import CreateTransactionPremium from '@/components/CreateTransactionPremium.vue';
 import SubHeader from '@/components/SubHeader.vue';
 import Transaction from '@/components/Transaction.vue';
 import TransactionLoading from '@/components/TransactionLoading.vue';
 import { Methods, usePayments } from '@/composables/usePayments';
+import { useAuthStore } from '@/stores/auth';
 import { useRoute } from 'vue-router';
 
 const route = useRoute()
 const wallet_id = route.params.id
-
+const {getUserProfile} = useAuthStore()
 const {
     handlePaymentsMethods,
     isTransactionsLoading,
     paymentsMethods,
     selectedTransactions
 } = usePayments()
-function t(){
 
-}
+const user = getUserProfile()
 
 </script>
 
 <template>
     <SubHeader namePage="Transações"/>
     <nav>
-        <div class="options">
+        <div class="options" v-if="!user?.is_premium">
             <CreateTransaction :wallet_id="wallet_id"/>
+        </div>
+        <div class="options" v-else>
+            <CreateTransactionPremium :wallet_id="wallet_id"/>
         </div>
 
         <div class="methods-container">
