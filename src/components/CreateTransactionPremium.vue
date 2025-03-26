@@ -16,6 +16,7 @@ import { useCreateTransaction } from '@/composables/useCreateTransaction';
 import { useAPI } from '@/composables/useApi';
 import { ref } from 'vue';
 import { AxiosError } from 'axios';
+import CreateProof from './CreateProof.vue';
 
 const props = defineProps<{
   wallet_id: string | string[]
@@ -36,7 +37,8 @@ const {
     transactionDate,
     typeTransaction,
     isCreatingTransaction,
-    handleCreateTransaction
+    handleCreateTransaction,
+    handleGetProofUrl,
 
 } = useCreateTransaction(props.wallet_id)
 
@@ -241,6 +243,7 @@ loadCustomSubtypes()
 
         </fieldset>
 
+        <CreateProof v-if="!isRecurring" :handle-get-proof-url="handleGetProofUrl"/>
 
         <div :style="{ display: 'flex', marginTop: '25px', justifyContent: 'flex-end' }">
           <DialogClose as-child>

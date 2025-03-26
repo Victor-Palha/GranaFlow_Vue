@@ -17,6 +17,7 @@ export function useCreateTransaction(wallet_id: string | string[]){
     const transactionDate = ref(formatDateToRef(new Date()));
     const recurrenceStart = ref(formatDateToRef(new Date()));
     const recurrenceEnd = ref(formatDateToRef(new Date()));
+    const proofUrl = ref<string | null>(null)
 
     function formatDateToRef(date: Date){
         return date.toISOString().split("T")[0];
@@ -52,7 +53,7 @@ export function useCreateTransaction(wallet_id: string | string[]){
                 transaction_date: formatDateToApi(transactionDate.value),
                 subtype: subtypeTransaction.value,
                 description: description.value,
-                proof_url: null,
+                proof_url: proofUrl.value,
                 wallet_id: parseInt(wallet_id as string)
             }
             console.log(data)
@@ -105,8 +106,13 @@ export function useCreateTransaction(wallet_id: string | string[]){
         }
     }
 
+    function handleGetProofUrl(url: string){
+        proofUrl.value = url
+    }
+
 
     return {
+        handleGetProofUrl,
         handleCreateTransaction,
         nameTransaction,
         description,
