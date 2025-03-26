@@ -19,26 +19,36 @@ defineProps<{
 </template>
 
 <style scoped>
-.container-wallet{
-    /* items-center justify-center gap-2 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background-color: transparent;
-    border: none;
+.container-wallet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.container-wallet:hover {
+  transform: scale(1.1);
 }
 
 .avatar {
-  width: 7rem; /* 28 x 0.25rem */
+  width: 7rem;
   height: 7rem;
   border: 1px dashed black;
   border-radius: 9999px;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 2px 5px black;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.456);
+  transition: box-shadow 0.3s ease;
+}
+
+.container-wallet:hover .avatar {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.644);
 }
 
 .avatar-letter {

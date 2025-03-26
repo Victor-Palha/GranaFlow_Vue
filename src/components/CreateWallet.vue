@@ -49,10 +49,12 @@ async function handleCreateWallet(){
 <template>
   <DialogRoot>
     <DialogTrigger>
-        <div class="Avatar">
-            <PlusIcon class="icon"/>
-        </div>
-        <p className="AvatarLabel">Criar carteira</p>
+      <div class="trigger">
+          <div class="Avatar">
+              <PlusIcon class="icon"/>
+          </div>
+          <p className="AvatarLabel">Criar carteira</p>
+      </div>
     </DialogTrigger>
     <DialogPortal>
       <DialogOverlay class="DialogOverlay" />
@@ -113,6 +115,10 @@ button,
 fieldset,
 input {
   all: unset;
+}
+
+.trigger{
+  cursor: pointer;
 }
 
 .Avatar {
