@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import type { ApexOptions } from 'apexcharts';
 import { useReports } from '@/composables/useReports';
 import type { MonthReportSubtype } from '@/types/reports';
 

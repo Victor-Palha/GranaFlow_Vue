@@ -18,11 +18,14 @@
     "@heroicons/vue": "^2.2.0",
     "apexcharts": "^4.5.0",
     "axios": "^1.8.4",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
     "pinia": "^3.0.1",
     "radix-vue": "^1.9.17",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0",
-    "vue3-apexcharts": "^1.8.0"
+    "vue3-apexcharts": "^1.8.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.0",
