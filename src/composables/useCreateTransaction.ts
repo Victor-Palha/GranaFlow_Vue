@@ -7,7 +7,7 @@ import useCustomToast from "./useCustomToast";
 
 export function useCreateTransaction(wallet_id: string | string[]){
     const {refetchTransactions} = useTransactionStore()
-    const {showWarning, showError, showInfo, showSuccess, showToast} = useCustomToast()
+    const {showWarning, showError, showSuccess} = useCustomToast()
 
     const isCreatingTransaction = ref(false);
     const nameTransaction = ref("");

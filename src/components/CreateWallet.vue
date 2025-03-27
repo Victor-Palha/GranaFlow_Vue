@@ -13,7 +13,9 @@ import {PlusIcon, XMarkIcon} from '@heroicons/vue/24/outline'
 import { ref } from 'vue';
 import { useAPI } from '@/composables/useApi';
 import { AxiosError } from 'axios';
+import useCustomToast from '@/composables/useCustomToast';
 
+const {showWarning, showError, showSuccess} = useCustomToast()
 const props = defineProps<{
   refreshWallets: () => void
 }>()
@@ -24,7 +26,8 @@ const isCreatingWaller = ref(false)
 
 async function handleCreateWallet(){
     if(name.value.length < 3){
-        return alert("Por favor, dê um nome com mais de 3 letras para sua carteira")
+      showWarning("Por favor, dê um nome com mais de 3 letras para sua carteira", "Aviso!")
+      return
     }
     const api = await useAPI();
     if (!api) {
@@ -35,9 +38,12 @@ async function handleCreateWallet(){
         await api.server.post("/api/wallet", {name: name.value, type: type.value})
         name.value = ""
         props.refreshWallets()
-    }catch(error){
+        showSuccess("Carteira criada com sucesso!", "Sucesso!")
+    }
+    catch(error){
         if(error instanceof AxiosError){
-            return alert(error.response?.data.message)
+          showError(error.response?.data.message, "Erro!")
+          return
         }
     }finally{
       isCreatingWaller.value = false
