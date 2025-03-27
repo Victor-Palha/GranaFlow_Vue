@@ -93,6 +93,15 @@ function onYearChange(event: Event) {
 </template>
 
 <style scoped>
+:root{
+  --border-color: #e2e8f0;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .nav-bar {
   display: flex;
   align-items: center;
