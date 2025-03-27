@@ -216,6 +216,7 @@ watch(props.monthReport, ()=>{
   display: flex;
   justify-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 @media screen and (min-width: 750px) {

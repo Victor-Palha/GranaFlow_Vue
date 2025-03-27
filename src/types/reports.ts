@@ -7,7 +7,7 @@ export type AnuualReports = {
     outcome: string
 }
 
-type MonthReportSubtype = {
+export type MonthReportSubtype = {
     total: string;
     type: 'INCOME' | 'OUTCOME';
     subtype: string;
