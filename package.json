@@ -21,6 +21,7 @@
     "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",
     "pinia": "^3.0.1",
+    "primevue": "^4.3.3",
     "radix-vue": "^1.9.17",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0",

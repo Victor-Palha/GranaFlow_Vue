@@ -207,7 +207,6 @@ async function handleSubmit(): Promise<void> {
 </template>
 
 <style scoped>
-/* Estilos permanecem exatamente os mesmos do componente anterior */
 .file-upload-container {
   max-width: 500px;
   margin: 0 auto;

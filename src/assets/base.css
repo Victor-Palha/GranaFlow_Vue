@@ -1,36 +1,34 @@
-/* color palette from <https://github.com/vuejs/theme> */
+/* ==================== */
+/* VARIÁVEIS E BASE */
+/* ==================== */
 :root {
-  /* Green */
-  --color-green-low: #52F7B3;     /* vibrante, menta */
-  --color-green-medium: #3CA378;  /* tom balanceado */
-  --color-green-high: #235F46;    /* escuro, sóbrio */
+  /* Cores - Organizadas por tonalidade */
+  --color-green-low: #52F7B3;
+  --color-green-medium: #3CA378;
+  --color-green-high: #235F46;
+  
+  --color-gray-light: #F5F5F5;
+  --color-gray-medium: #AFAFAF;
+  --color-gray-dark: #2C2C2C;
+  --color-gray-bg: #2c2c2c74;
+  
+  --color-blue-low: #8EDCF7;
+  --color-blue-medium: #3C9BA3;
+  --color-blue-high: #23525F;
+  
+  --color-purple-low: #E0C7F7;
+  --color-purple-medium: #9B6EC3;
+  --color-purple-high: #5A357A;
+  
+  --color-yellow-low: #FFF8CC;
+  --color-yellow-medium: #F7C452;
+  --color-yellow-high: #8A6A1F;
+  
+  --color-red-low: #F7B3B3;
+  --color-red-medium: #D94B4B;
+  --color-red-high: #6E1C1C;
 
-  /* Gray */
-  --color-gray-light: #F5F5F5;    /* quase branco */
-  --color-gray-medium: #AFAFAF;   /* cinza médio */
-  --color-gray-dark: #2C2C2C;     /* quase preto */
-  --color-gray-bg: #2c2c2c74; 
-
-  /* Blue */
-  --color-blue-low: #8EDCF7;      /* azul claro pastel */
-  --color-blue-medium: #3C9BA3;   /* tom suave complementar ao verde */
-  --color-blue-high: #23525F;     /* tom mais profundo, combina com o green.high */
-
-  /* Purple */
-  --color-purple-low: #E0C7F7;    /* lavanda */
-  --color-purple-medium: #9B6EC3; /* roxo médio, bom para destaque */
-  --color-purple-high: #5A357A;   /* tom escuro, sofisticado */
-
-  /* Yellow */
-  --color-yellow-low: #FFF8CC;    /* tom bem suave */
-  --color-yellow-medium: #F7C452; /* vibrante, ótimo para atenção */
-  --color-yellow-high: #8A6A1F;   /* tom amadeirado para contraste */
-
-  /* Red */
-  --color-red-low: #F7B3B3;       /* rosa claro, amigável */
-  --color-red-medium: #D94B4B;    /* alerta sem ser agressivo */
-  --color-red-high: #6E1C1C;      /* forte, para erro/crítico */
-
+  /* Tokens de design */
   --border-color: #e2e8f0;
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);

@@ -3,9 +3,11 @@ import { useAPI } from "./useApi";
 import { AxiosError } from "axios";
 import type { API } from "@/api/config";
 import { useTransactionStore } from "@/stores/transactions";
+import useCustomToast from "./useCustomToast";
 
 export function useCreateTransaction(wallet_id: string | string[]){
     const {refetchTransactions} = useTransactionStore()
+    const {showWarning, showError, showInfo, showSuccess, showToast} = useCustomToast()
 
     const isCreatingTransaction = ref(false);
     const nameTransaction = ref("");
@@ -29,7 +31,8 @@ export function useCreateTransaction(wallet_id: string | string[]){
       
     async function handleCreateTransaction() {
         if (nameTransaction.value.length < 3 || amountTransaction.value.length < 1) {
-            alert("Por favor, preencha os campos de nome e valor corretamente!")
+            showWarning("Por favor, preencha os campos de nome e valor corretamente!", "Aviso!")
+            return
         }
         const api = await useAPI();
         if (!api) {
@@ -56,15 +59,19 @@ export function useCreateTransaction(wallet_id: string | string[]){
                 proof_url: proofUrl.value,
                 wallet_id: parseInt(wallet_id as string)
             }
-            console.log(data)
     
             await api.server.post("/api/transaction/single", data)
             refetchTransactions()
+            handleResetForm()
+            showSuccess("Transação criada com sucesso!", "Sucesso!")
         } catch (error) {
-            console.log(error)
             if (error instanceof AxiosError) {
+                showError(error.response?.data.message, "Erro!")
                 alert(error.response?.data.message)
             }
+            showError("Erro inesperado ao criar transação.", "Erro!")
+            alert("Erro inesperado ao criar transação.")
+            
         } finally{
             isCreatingTransaction.value = false
         }
@@ -88,19 +95,18 @@ export function useCreateTransaction(wallet_id: string | string[]){
                 proof_url: null,
                 wallet_id: parseInt(wallet_id as string),
             };
-            console.log(data)
     
-            const response = await api.server.post("/api/transaction/recurrent", data);
-            console.log(response.data)
-            refetchTransactions
+            await api.server.post("/api/transaction/recurrent", data);
+            refetchTransactions()
+            handleResetForm()
+            showSuccess("Transações recorrentes criadas com sucesso!", "Sucesso!")
         } catch (error) {
             if (error instanceof AxiosError) {
-                console.log(error)
-                alert(error.response?.data.message || "Erro ao criar transações recorrentes.");
-            } else {
-                console.log(error)
-                alert("Erro inesperado ao criar transações recorrentes.");
+                showError(error.response?.data.message, "Erro!")
+                return
             }
+            showError("Erro inesperado ao criar transações recorrentes.", "Erro!")
+            
         } finally{
             isCreatingTransaction.value = false
         }
@@ -110,6 +116,18 @@ export function useCreateTransaction(wallet_id: string | string[]){
         proofUrl.value = url
     }
 
+    function handleResetForm(){
+        isCreatingTransaction.value = (false);
+        nameTransaction.value = ("");
+        description.value = ("");
+        typeTransaction.value = ("INCOME");
+        amountTransaction.value = ("");
+        isRecurring.value = (false);
+        transactionDate.value = formatDateToRef(new Date());
+        recurrenceStart.value = formatDateToRef(new Date());
+        recurrenceEnd.value = formatDateToRef(new Date());
+        proofUrl.value = (null)
+    }
 
     return {
         handleGetProofUrl,

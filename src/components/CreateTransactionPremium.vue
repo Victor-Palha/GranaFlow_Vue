@@ -246,11 +246,9 @@ loadCustomSubtypes()
         <CreateProof v-if="!isRecurring" :handle-get-proof-url="handleGetProofUrl"/>
 
         <div :style="{ display: 'flex', marginTop: '25px', justifyContent: 'flex-end' }">
-          <DialogClose as-child>
             <button class="Button green" @click="handleCreateTransaction" :disabled="isCreatingTransaction">
               {{ isCreatingTransaction ? 'Criando...' : 'Criar' }}
             </button>
-          </DialogClose>
         </div>
 
         <DialogClose class="IconButton" aria-label="Fechar">

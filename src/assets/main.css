@@ -1,5 +1,7 @@
 @import './base.css';
-
+/* ==================== */
+/* TIPOGRAFIA */
+/* ==================== */
 @font-face {
   font-family: 'Playwrite';
   src: url('@/assets/fonts/PlaywriteITModerna-ExtraLight.ttf') format('truetype');
@@ -14,33 +16,47 @@
   font-style: normal;
 }
 
-.main-container{
+body {
+  font-family: sans-serif;
+  background-color: #e5e7eb;
+}
+
+/* ==================== */
+/* LAYOUT PRINCIPAL */
+/* ==================== */
+.main-container {
   min-height: 100vh;
   max-height: 100%;
   min-width: 100vw;
   max-width: 100%;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to bottom, 
+  background: linear-gradient(
+    to bottom, 
     var(--color-green-high), 
     var(--color-green-medium)
   );
 }
 
+/* ==================== */
+/* COMPONENTES */
+/* ==================== */
+/* Botão Voltar */
 .back {
   width: 40px;
   height: 40px;
-  stroke: #fff; /* ícones outline usam stroke */
+  stroke: #fff;
   stroke-width: 1.5;
-  transition: 0.5s;
+  transition: var(--transition);
 }
 
-.back:hover{
-    stroke: var(--color-red-medium);
-    transform: scale(1.1);
-    filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.4));
+.back:hover {
+  stroke: var(--color-red-medium);
+  transform: scale(1.1);
+  filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.4));
 }
 
+/* Switch (Radix) */
 .SwitchRoot {
   width: 42px;
   height: 25px;
@@ -48,7 +64,7 @@
   border-radius: 9999px;
   border: 0.5px;
   position: relative;
-  box-shadow: 0 1px 5px black;
+  box-shadow: var(--shadow-sm);
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
@@ -66,7 +82,7 @@
   height: 21px;
   background-color: white;
   border-radius: 9999px;
-  box-shadow: 0 2px 2px black;
+  box-shadow: var(--shadow-sm);
   transition: transform 100ms;
   transform: translateX(2px);
   will-change: transform;
@@ -76,26 +92,178 @@
   transform: translateX(19px);
 }
 
-body{
-  font-family: sans-serif;
-  background-color: #e5e7eb;
+/* Toast (PrimeVue) */
+.p-toast {
+  max-width: 25rem;
+  z-index: 99999;
 }
 
+.p-toast .p-toast-message {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin: 0 0 1rem 0;
+  border-width: 0 0 0 4px;
+}
+
+/* Variantes de Toast */
+/* ==================== */
+/* TOASTS ELEGANTES */
+/* ==================== */
+.p-toast {
+  max-width: 28rem;
+  min-width: 22rem;
+  z-index: 99999;
+}
+
+.p-toast .p-toast-message {
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 
+              0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  margin: 0 0 1.25rem 0;
+  border-left: 6px solid;
+  padding: 1.25rem 1.5rem;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.95);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Efeito hover sutil */
+.p-toast .p-toast-message:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+}
+
+/* Container do conteúdo */
+.p-toast .p-toast-message-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+/* Ícones - Mais destacados */
+.p-toast .p-toast-message-icon {
+  font-size: 1.75rem;
+  margin-top: 0.125rem;
+  flex-shrink: 0;
+}
+
+/* Textos */
+.p-toast .p-toast-summary {
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.25rem;
+}
+
+.p-toast .p-toast-detail {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  opacity: 0.9;
+  margin-right: 1rem;
+}
+
+/* Botão de fechar - Mais refinado */
+.p-toast .p-toast-icon-close {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gray-medium);
+  transition: all 0.2s;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.p-toast .p-toast-icon-close:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  color: var(--color-gray-dark);
+}
+
+/* ==================== */
+/* VARIAÇÕES POR TIPO */
+/* ==================== */
+/* Sucesso */
+.p-toast .p-toast-message-success {
+  border-color: var(--color-green-medium);
+  color: var(--color-green-high);
+}
+
+.p-toast .p-toast-message-success .p-toast-message-icon {
+  color: var(--color-green-medium);
+}
+
+/* Informação */
+.p-toast .p-toast-message-info {
+  border-color: var(--color-blue-medium);
+  color: var(--color-blue-high);
+}
+
+.p-toast .p-toast-message-info .p-toast-message-icon {
+  color: var(--color-blue-medium);
+}
+
+/* Aviso */
+.p-toast .p-toast-message-warn {
+  border-color: var(--color-yellow-medium);
+  color: var(--color-yellow-high);
+}
+
+.p-toast .p-toast-message-warn .p-toast-message-icon {
+  color: var(--color-yellow-medium);
+}
+
+/* Erro */
+.p-toast .p-toast-message-error {
+  border-color: var(--color-red-medium);
+  color: var(--color-red-high);
+}
+
+.p-toast .p-toast-message-error .p-toast-message-icon {
+  color: var(--color-red-medium);
+}
+
+.p-toast-message-enter-active {
+  animation: toastSlideIn 0.4s ease-out;
+}
+
+.p-toast-message-leave-active {
+  animation: toastSlideOut 0.3s ease-in;
+}
+/* ==================== */
+/* ANIMAÇÕES */
+/* ==================== */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toastSlideOut {
   from {
     opacity: 1;
+    transform: translateX(0);
   }
   to {
     opacity: 0;
+    transform: translateX(30px);
   }
 }
 
@@ -110,13 +278,48 @@ body{
 }
 
 @keyframes pulse {
-  0% {
-      opacity: 1;
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+/* ==================== */
+/* COMPONENTES DE DIÁLOGO */
+/* ==================== */
+/* (Adicione aqui os estilos específicos para diálogos se necessário) */
+
+/* ==================== */
+/* MEDIA QUERIES */
+/* ==================== */
+@media (max-width: 768px) {
+  .main-container {
+    background: linear-gradient(
+      to right, 
+      var(--color-green-high), 
+      var(--color-green-medium)
+    );
   }
-  50% {
-      opacity: 0.4;
+  
+  .p-toast {
+    width: 90%;
+    left: 5%;
+    right: 5%;
   }
-  100% {
-      opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .p-toast {
+    width: 92%;
+    min-width: auto;
+    left: 4%;
+    right: 4%;
+  }
+  
+  .p-toast .p-toast-message {
+    padding: 1rem;
+  }
+  
+  .p-toast .p-toast-message-icon {
+    font-size: 1.5rem;
   }
 }
