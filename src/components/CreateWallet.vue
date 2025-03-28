@@ -93,7 +93,7 @@ async function handleCreateWallet(){
             v-model="type"
           >
             <option value="PERSONAL">Pessoal</option>
-            <option value="ENTERPRISE">Empresarial</option>
+            <!-- <option value="ENTERPRISE">Empresarial</option> -->
           </select>
         </fieldset>
 
