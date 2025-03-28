@@ -1,58 +1,111 @@
 <script setup lang="ts">
-import type { Transaction } from '@/types/transactions';
-import { CurrencyDollarIcon, ArrowTrendingDownIcon } from '@heroicons/vue/24/outline';
+import { ref } from 'vue'
+import TransactionModal from '@/components/TransactionModal.vue'
+import { useTransactionManager } from '@/composables/useTransactionManager'
+import type { Transaction } from '@/types/transactions'
+import { 
+  CurrencyDollarIcon, 
+  ArrowTrendingDownIcon
+} from '@heroicons/vue/24/outline'
+import useCustomToast from '@/composables/useCustomToast'
 
 const props = defineProps<{
-    data: Transaction
+  data: Transaction
 }>()
 
+const emit = defineEmits(['deleted', 'edit'])
+
+const isOpen = ref(false)
+const isDeleting = ref(false)
+
+const { handleDeleteTransaction } = useTransactionManager()
+const {showSuccess, showError} = useCustomToast()
+
 const amountFormatted = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-}).format(parseFloat(props.data.amount));
+  style: 'currency',
+  currency: 'BRL',
+}).format(parseFloat(props.data.amount))
+
+function handleOpenModal() {
+  isOpen.value = true
+}
+
+async function onDeleteTransaction(){
+  if (!confirm('Tem certeza que deseja excluir esta transação?')) return
+  
+  isDeleting.value = true
+  try {
+    await handleDeleteTransaction(props.data.id, props.data.wallet_id)
+    emit('deleted', props.data.id)
+    showSuccess("Sua transação foi deletada com sucesso!")
+    isOpen.value = false
+  }catch(error){
+    showError("Um erro inesperado ocorreu enquanto tentavamos deletar sua transação.")
+  } finally {
+    isDeleting.value = false
+  }
+}
 
 </script>
 
 <template>
-    <div class="transaction-container">
-        <!-- Left - Icon + Text  -->
-        <div class="left-container">
-            <div class="icons-container" :class="props.data.type === 'INCOME' ? 'icons-income' : 'icons-outcome'">
-                <CurrencyDollarIcon v-if="props.data.type === 'INCOME'" class="icon"/>
-                <ArrowTrendingDownIcon v-else class="icon"/>
-            </div>
+  <div class="transaction-container" @click="handleOpenModal">
+    <div class="left-container">
+      <div class="icons-container" :class="data.type === 'INCOME' ? 'icons-income' : 'icons-outcome'">
+        <CurrencyDollarIcon v-if="data.type === 'INCOME'" class="icon"/>
+        <ArrowTrendingDownIcon v-else class="icon"/>
+      </div>
 
-            <div class="container-info">
-                <p class="transaction-name">{{props.data.name}}</p>
-                <span class="subtype">{{props.data.subtype}}</span>
-                <span class="description">{{props.data.description}}</span>
-            </div>
-        </div>
-
-        <div class="amount-container">
-            <p class="amount-value" :class="props.data.type === 'INCOME' ? 'amount-value-income' : 'amount-value-outcome'">{{amountFormatted}}</p>
-            <span class="date-transaction">{{props.data.transaction_date}}</span>
-        </div>
+      <div class="container-info">
+        <p class="transaction-name">{{ data.name }}</p>
+        <span class="subtype">{{ data.subtype }}</span>
+        <span class="description">{{ data.description }}</span>
+      </div>
     </div>
+
+    <div class="amount-container">
+      <p class="amount-value" :class="data.type === 'INCOME' ? 'amount-value-income' : 'amount-value-outcome'">
+        {{ amountFormatted }}
+      </p>
+      <span class="date-transaction">
+        {{ new Date(data.transaction_date).toLocaleDateString('pt-BR') }}
+      </span>
+    </div>
+  </div>
+
+  <TransactionModal
+    :transaction="data"
+    :open="isOpen"
+    :is-deleting="isDeleting"
+    @update:open="isOpen = $event"
+    @delete="onDeleteTransaction"
+  />
 </template>
 
 <style scoped>
 .transaction-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 0.75rem 0;
-    width: 100%;
-    max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.75rem 0.5rem;
+  width: 100%;
+  max-width: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 8px;
+}
+
+.transaction-container:hover {
+  background-color: #f3f4f6;
 }
 
 .left-container {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    flex: 1;
-    min-width: 0; /* Permite que o texto quebre corretamente */
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
 }
 
 .icons-container {
@@ -75,7 +128,7 @@ const amountFormatted = new Intl.NumberFormat('pt-BR', {
 .container-info {
     display: flex;
     flex-direction: column;
-    min-width: 0; /* Permite que o texto quebre corretamente */
+    min-width: 0;
 }
 
 .transaction-name {
