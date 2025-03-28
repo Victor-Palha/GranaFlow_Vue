@@ -9,6 +9,7 @@ import { useAuthStore } from '@/stores/auth';
 import { useTransactionStore } from '@/stores/transactions';
 import { ArrowRightStartOnRectangleIcon } from '@heroicons/vue/24/outline'
 import { onMounted, ref } from 'vue';
+import UserProfile from '@/components/UserProfile.vue';
 
 const {onLogout, getUserProfile} = useAuthStore()
 const {setWalletToProvider} = useTransactionStore()
@@ -37,7 +38,8 @@ function handleSelectWallet(wallet_id: number){
 <template>
     <main class="main-container">
         <header class="header">
-            <img alt="Grana Flow logo" src="@/assets/logo.png" width="70" height="70" />
+            <!-- <img alt="Grana Flow logo" src="@/assets/logo.png" width="70" height="70" /> -->
+             <UserProfile :user="user"/>
             <ArrowRightStartOnRectangleIcon class="back" @click="onLogout"/>
         </header>
 
