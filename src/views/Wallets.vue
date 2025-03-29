@@ -61,6 +61,7 @@ function handleSelectWallet(wallet_id: number){
                     :name="wallet.name"
                     :id="wallet.id"
                     :handleSelectWallet="handleSelectWallet"
+                    :refresh-wallets="refreshWallets"
                 />
                 <CreateWallet 
                     :refreshWallets="refreshWallets"
