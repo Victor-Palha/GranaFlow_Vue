@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import router from '@/router';
-import { Bars3Icon } from '@heroicons/vue/24/outline';
+import { ChevronLeftIcon } from '@heroicons/vue/24/outline';
 const props = defineProps<{
     namePage: string
 }>()
@@ -13,7 +13,7 @@ function handleBack(){
 
 <template>
     <header>
-        <Bars3Icon class="back" @click="handleBack"/>
+        <ChevronLeftIcon class="backHeader" @click="handleBack"/>
         <h1>{{props.namePage}}</h1>
     </header>
 </template>

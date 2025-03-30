@@ -88,24 +88,24 @@ const {
         </fieldset>
 
         <fieldset class="Fieldset">
-          <label class="Label" for="subtype">Subtipo da transação</label>
+          <label class="Label" for="subtype">Categoria da transação</label>
           <select
             id="subtype"
             name="subtype"
             class="Select"
             v-model="subtypeTransaction"
           >
-            <option value="FOOD">Alimentação</option>
-            <option value="HOUSING">Moradia</option>
-            <option value="TRANSPORT">Transporte</option>
-            <option value="ENTERTAINMENT">Lazer</option>
-            <option value="HEALTH">Saúde</option>
-            <option value="EDUCATION">Educação</option>
-            <option value="BILLS">Contas</option>
-            <option value="INVESTMENT">Investimentos</option>
-            <option value="WAGE">Salário</option>
-            <option value="DONATION">Doações</option>
-            <option value="OTHER">Outros</option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Moradia">Moradia</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Saúde">Saúde</option>
+            <option value="Educação">Educação</option>
+            <option value="Contas">Contas</option>
+            <option value="Investimentos">Investimentos</option>
+            <option value="Salário">Salário</option>
+            <option value="Doações">Doações</option>
+            <option value="Outros">Outros</option>
           </select>
         </fieldset>
 

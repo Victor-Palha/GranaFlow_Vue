@@ -56,6 +56,20 @@ body {
   filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.4));
 }
 
+.backHeader {
+  width: 40px;
+  height: 40px;
+  stroke: #fff;
+  stroke-width: 1.5;
+  transition: var(--transition);
+}
+
+.backHeader:hover {
+  stroke: var(--color-green-medium);
+  transform: scale(1.1);
+  filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.4));
+}
+
 /* Switch (Radix) */
 .SwitchRoot {
   width: 42px;

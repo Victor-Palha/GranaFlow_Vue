@@ -13,7 +13,7 @@ export function useCreateTransaction(wallet_id: string | string[]){
     const nameTransaction = ref("");
     const description = ref("");
     const typeTransaction = ref("INCOME");
-    const subtypeTransaction = ref("FOOD");
+    const subtypeTransaction = ref("Alimentação");
     const amountTransaction = ref("");
     const isRecurring = ref(false);
     const transactionDate = ref(formatDateToRef(new Date()));

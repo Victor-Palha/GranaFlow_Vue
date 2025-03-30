@@ -146,8 +146,8 @@ loadCustomSubtypes()
 
         <fieldset class="Fieldset">
             <div class="Subtype">
-                <label class="Label" for="subtype">Subtipo da transação</label>
-                <button v-if="!showAddSubtype" @click="showSubtypeModal" class="OpenSubtype">Novo subtipo</button>
+                <label class="Label" for="subtype">Categoria da transação</label>
+                <button v-if="!showAddSubtype" @click="showSubtypeModal" class="OpenSubtype">Novo categoria</button>
 
                 <button v-else @click="closeSubtypeModal" class="CloseSubtype">
                     <XMarkIcon class="icon" />
@@ -157,7 +157,7 @@ loadCustomSubtypes()
                 <input
                     v-model="newSubtypeName.name"
                     class="Input"
-                    placeholder="Nome do novo subtipo"
+                    placeholder="Nome da nova categoria"
                 />
                 <button @click="addCustomSubtype" class="Button-Add-Subtype">
                     Adicionar
@@ -177,16 +177,16 @@ loadCustomSubtypes()
                 >
                     {{ subtype.name }}
                 </option>
-                <option value="FOOD">Alimentação</option>
-                <option value="HOUSING">Moradia</option>
-                <option value="TRANSPORT">Transporte</option>
-                <option value="ENTERTAINMENT">Lazer</option>
-                <option value="HEALTH">Saúde</option>
-                <option value="EDUCATION">Educação</option>
-                <option value="BILLS">Contas</option>
-                <option value="INVESTMENT">Investimentos</option>
-                <option value="WAGE">Salário</option>
-                <option value="DONATION">Doações</option>
+                <option value="Alimentação">Alimentação</option>
+                <option value="Moradia">Moradia</option>
+                <option value="Transporte">Transporte</option>
+                <option value="Lazer">Lazer</option>
+                <option value="Saúde">Saúde</option>
+                <option value="Educação">Educação</option>
+                <option value="Contas">Contas</option>
+                <option value="Investimentos">Investimentos</option>
+                <option value="Salário">Salário</option>
+                <option value="Doações">Doações</option>
             </select>
         </fieldset>
 

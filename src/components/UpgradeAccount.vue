@@ -2,6 +2,7 @@
 import { DialogClose, DialogContent, DialogDescription, DialogOverlay, DialogPortal, DialogRoot, DialogTitle } from 'radix-vue'
 import { HomeIcon, BriefcaseIcon, ChartBarIcon, DocumentTextIcon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { useAPI } from '@/composables/useApi';
+import useCustomToast from '@/composables/useCustomToast';
 
 const OPEN = true
 
@@ -9,6 +10,7 @@ const props = defineProps<{
   handleClose: ()=>void
 }>()
 
+const {showError} = useCustomToast()
 
 async function handleUpgradeAccount(){
   const api = await useAPI();
@@ -21,7 +23,7 @@ async function handleUpgradeAccount(){
     window.location.href = response.data.url;
   } catch (error) {
     console.error('Erro ao notificar pagamento:', error)
-    alert('Não foi possível concluir o upgrade. Tente novamente.')
+    showError('Não foi possível concluir o upgrade. Tente novamente.')
   }
 }
 </script>
@@ -187,7 +189,6 @@ async function handleUpgradeAccount(){
 .benefits span {
   font-weight: bold;
   color: var(--color-green-medium);
-  text-shadow: 0px 1px 5px #00000051;
   font-size: 16px;
 }
 

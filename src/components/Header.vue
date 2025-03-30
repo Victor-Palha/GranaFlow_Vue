@@ -22,7 +22,7 @@ const formattedTotal = computed(() =>
 <template>
     <header>
         <div class="icons">
-            <ChevronLeftIcon class="back" @click="handleBackToHome"/>
+            <ChevronLeftIcon class="backHeader" @click="handleBackToHome"/>
             <div></div>
         </div>
 
