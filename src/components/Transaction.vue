@@ -144,6 +144,7 @@ async function onDeleteTransaction(){
     color: #374151;
     font-style: italic;
     margin-bottom: 0.25rem;
+    text-transform: uppercase;
 }
 
 .description {

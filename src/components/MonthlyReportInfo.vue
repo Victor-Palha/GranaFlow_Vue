@@ -243,6 +243,7 @@ watch(() => props.monthReport, () => {
 .category-name {
     font-weight: 500;
     color: #333;
+    text-transform: uppercase;
 }
 
 .category-percentage {

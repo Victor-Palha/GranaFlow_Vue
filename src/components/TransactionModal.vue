@@ -365,6 +365,7 @@ async function handleDeleteTransaction(){
   font-size: 0.875rem;
   color: #111827;
   font-weight: 500;
+  text-transform: uppercase;
 }
 
 .DialogFooter {
