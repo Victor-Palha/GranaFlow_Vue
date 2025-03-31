@@ -54,7 +54,7 @@ const user = getUserProfile()
                 <span class="method-text">Saídas</span>
             </button>
             <button
-                @click="handlePaymentsMethods(Methods.OUTCOME)"
+                @click="handlePaymentsMethods(Methods.FUTURE)"
                 :class="['method-button', paymentsMethods === Methods.FUTURE ? 'active' : '']"
             >
                 <span class="method-text">Futuras</span>
