@@ -6,6 +6,7 @@ import { ref } from "vue";
 export const useTransactionStore = defineStore('transactions', ()=>{
     const isTransactionsLoading = ref(false)
     const myTransactions = ref<Transaction[]>([])
+    const futureTransactions = ref<Transaction[]>([])
     const walletId = ref<number | null>(null)
 
     async function fetchTransactions() {
@@ -22,7 +23,19 @@ export const useTransactionStore = defineStore('transactions', ()=>{
                     is_until_today: true
                 }
             });
+
+            const responseOthers = await api.server.get("/api/transaction", {
+                params: {
+                    wallet_id: walletId.value,
+                    limit: null,
+                    is_after_today: true
+                }
+            });
+
+            const {transactions: futureTransactionsResponse} = responseOthers.data
             const {transactions} = response.data;
+
+            futureTransactions.value = futureTransactionsResponse
             myTransactions.value = transactions
         } catch (error) {
             console.error("Erro ao buscar transações:", error);
@@ -42,6 +55,7 @@ export const useTransactionStore = defineStore('transactions', ()=>{
 
     return {
         myTransactions,
+        futureTransactions,
         isTransactionsLoading,
         refetchTransactions,
         setWalletToProvider,

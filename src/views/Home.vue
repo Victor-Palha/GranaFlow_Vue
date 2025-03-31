@@ -2,10 +2,10 @@
 import { onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 
-const auth = useAuthStore()
+const {validateAuth, onLogin, isLoading} = useAuthStore()
 
 onMounted(() => {
-  auth.validateAuth()
+  validateAuth()
 })
 </script>
 
@@ -24,7 +24,7 @@ onMounted(() => {
     </header>
 
     <nav>
-      <button class="btn-provider" @click="auth.onLogin">
+      <button class="btn-provider" @click="onLogin" :disabled="isLoading">
         <img alt="google logo" src="@/assets/Google.png" width="30" height="30" />
         <span>Entrar com Google</span>
       </button>
@@ -102,7 +102,21 @@ onMounted(() => {
   font-size: 1.25rem;
 }
 
-@media (min-width: 1024px) {
-
+.btn-provider:disabled {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+  opacity: 0.7;
+  box-shadow: none;
+  transform: none;
 }
+
+.btn-provider:disabled:hover {
+  box-shadow: none;
+  background-color: #f3f4f6;
+}
+
+.btn-provider:disabled span {
+  color: #9ca3af;
+}
+
 </style>

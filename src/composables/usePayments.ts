@@ -6,12 +6,13 @@ import { ref, watch } from "vue";
 export enum Methods {
     ALL = "",
     INCOME = "INCOME",
-    OUTCOME = "OUTCOME"
+    OUTCOME = "OUTCOME",
+    FUTURE = "FUTURE"
 }
 
 export function usePayments(){
     const transactionsStore = useTransactionStore()
-    const { myTransactions, isTransactionsLoading } = storeToRefs(transactionsStore)
+    const { myTransactions, isTransactionsLoading, futureTransactions } = storeToRefs(transactionsStore)
     const paymentsMethods = ref<Methods>(Methods.ALL)
     const selectedTransactions = ref<Transaction[]>(myTransactions.value)
 
@@ -23,9 +24,13 @@ export function usePayments(){
         if(paymentsMethods.value == ""){
             selectedTransactions.value = myTransactions.value
             return
+        }else if(paymentsMethods.value == "FUTURE"){
+            selectedTransactions.value = futureTransactions.value
+            return
+        }else{
+            const filteredTransactions = transactions.filter(transaction => transaction.type === paymentsMethods.value);
+            selectedTransactions.value = filteredTransactions
         }
-        const filteredTransactions = transactions.filter(transaction => transaction.type === paymentsMethods.value);
-        selectedTransactions.value = filteredTransactions
     }
 
     watch([paymentsMethods, myTransactions], ()=>{

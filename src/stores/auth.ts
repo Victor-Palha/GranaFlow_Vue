@@ -29,6 +29,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function validateAuth() {
+        isLoading.value = true
         try {
             const api = await useAPI()
             if (api) {
@@ -46,6 +47,8 @@ export const useAuthStore = defineStore('auth', () => {
             }
         } catch (error) {
             authState.value = { authenticated: false, user_id: null }
+        } finally {
+            isLoading.value = false
         }
     }
 
