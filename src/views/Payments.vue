@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import CreateTransaction from '@/components/CreateTransaction.vue';
 import CreateTransactionPremium from '@/components/CreateTransactionPremium.vue';
+import PaymentsOnBoarding from '@/components/PaymentsOnBoarding.vue';
 import SubHeader from '@/components/SubHeader.vue';
 import Transaction from '@/components/Transaction.vue';
 import TransactionLoading from '@/components/TransactionLoading.vue';
 import { Methods, usePayments } from '@/composables/usePayments';
 import { useAuthStore } from '@/stores/auth';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute()
@@ -18,68 +20,85 @@ const {
     selectedTransactions
 } = usePayments()
 
+const showOnboarding = ref(false)
 const user = getUserProfile()
+
+onMounted(() => {
+  if (!localStorage.getItem('paymentOnboardingCompleted')) {
+    showOnboarding.value = true
+  }
+})
 
 </script>
 
 <template>
-    <SubHeader namePage="Transações"/>
-    <nav>
-        <div class="options" v-if="!user?.is_premium">
-            <CreateTransaction :wallet_id="wallet_id"/>
+    <div class="payments-layout">
+        <PaymentsOnBoarding v-if="showOnboarding && !isTransactionsLoading"/>
+        <SubHeader namePage="Transações"/>
+        <nav>
+            <div class="options" v-if="!user?.is_premium">
+                <div class="create-btn">
+                    <CreateTransaction :wallet_id="wallet_id" />
+                </div>
+            </div>
+            <div class="options" v-else>
+                <div  class="create-btn">
+                    <CreateTransactionPremium :wallet_id="wallet_id"/>
+                </div>
+            </div>
+
+            <div class="methods-container">
+                <button
+                    @click="handlePaymentsMethods(Methods.ALL)"
+                    :class="['method-button', paymentsMethods === Methods.ALL ? 'active' : '']"
+                >
+                    <span class="method-text">Todas</span>
+                </button>
+
+                <button
+                    @click="handlePaymentsMethods(Methods.INCOME)"
+                    :class="['method-button', paymentsMethods === Methods.INCOME ? 'active' : '']"
+                >
+                    <span class="method-text">Entradas</span>
+                </button>
+
+                <button
+                    @click="handlePaymentsMethods(Methods.OUTCOME)"
+                    :class="['method-button', paymentsMethods === Methods.OUTCOME ? 'active' : '']"
+                >
+                    <span class="method-text">Saídas</span>
+                </button>
+                <button
+                    @click="handlePaymentsMethods(Methods.FUTURE)"
+                    :class="['method-button', paymentsMethods === Methods.FUTURE ? 'active' : '']"
+                >
+                    <span class="method-text">Futuras</span>
+                </button>
+            </div>
+        </nav>
+
+        <div class="transactions-wrapper">
+            <template v-if="!isTransactionsLoading && selectedTransactions">
+                <Transaction
+                    v-for="transaction in selectedTransactions"
+                    :key="transaction.id"
+                    :data="transaction"
+                />
+            </template>
+
+            <template v-else>
+            <div class="transactions-loading-group">
+                <TransactionLoading v-for="i in 6" :key="i" />
+            </div>
+            </template>
         </div>
-        <div class="options" v-else>
-            <CreateTransactionPremium :wallet_id="wallet_id"/>
-        </div>
-
-        <div class="methods-container">
-            <button
-                @click="handlePaymentsMethods(Methods.ALL)"
-                :class="['method-button', paymentsMethods === Methods.ALL ? 'active' : '']"
-            >
-                <span class="method-text">Todas</span>
-            </button>
-
-            <button
-                @click="handlePaymentsMethods(Methods.INCOME)"
-                :class="['method-button', paymentsMethods === Methods.INCOME ? 'active' : '']"
-            >
-                <span class="method-text">Entradas</span>
-            </button>
-
-            <button
-                @click="handlePaymentsMethods(Methods.OUTCOME)"
-                :class="['method-button', paymentsMethods === Methods.OUTCOME ? 'active' : '']"
-            >
-                <span class="method-text">Saídas</span>
-            </button>
-            <button
-                @click="handlePaymentsMethods(Methods.FUTURE)"
-                :class="['method-button', paymentsMethods === Methods.FUTURE ? 'active' : '']"
-            >
-                <span class="method-text">Futuras</span>
-            </button>
-        </div>
-    </nav>
-
-    <div class="transactions-wrapper">
-        <template v-if="!isTransactionsLoading && selectedTransactions">
-            <Transaction
-                v-for="transaction in selectedTransactions"
-                :key="transaction.id"
-                :data="transaction"
-            />
-        </template>
-
-        <template v-else>
-        <div class="transactions-loading-group">
-            <TransactionLoading v-for="i in 6" :key="i" />
-        </div>
-        </template>
     </div>
 </template>
 
 <style scoped>
+    .payments-layout{
+        position: relative;
+    }
     nav{
         padding: 1rem;
         display: flex;
