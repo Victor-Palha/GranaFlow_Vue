@@ -4,9 +4,11 @@ import Header from '@/components/Header.vue';
 import NavDashboard from '@/components/NavDashboard.vue';
 import Transaction from "@/components/Transaction.vue";
 import TransactionLoading from "@/components/TransactionLoading.vue";
+import DashboardOnboarding from '@/components/DashboardOnboarding.vue'
 import { useDashboard } from '@/composables/useDashboard';
 import { useAuthStore } from '@/stores/auth';
 import { useRoute } from 'vue-router'
+import { onMounted, ref } from 'vue';
 
 const route = useRoute()
 const wallet_id = route.params.id
@@ -14,13 +16,22 @@ const wallet_id = route.params.id
 const {getUserProfile} = useAuthStore()
 const user = getUserProfile()
 
+const showOnboarding = ref(false)
+
 const {currentBalance, isTransactionsLoading, transactions} = useDashboard()
+
+onMounted(() => {
+  if (!localStorage.getItem('dashboardOnboardingCompleted')) {
+    showOnboarding.value = true
+  }
+})
 </script>
 
 <template>
     <div class="dashboard-layout">
-        <Header :total="currentBalance"/>
-        <NavDashboard :wallet-id="wallet_id"/>
+        <DashboardOnboarding :user="user" v-if="showOnboarding && !isTransactionsLoading" />
+        <Header :total="currentBalance" class="header"/>
+        <NavDashboard :wallet-id="wallet_id" class="nav-dashboard" />
         <main class="dashboard-main">
             <AnalyticMonth v-if="user?.is_premium" :wallet-id="wallet_id" class="analytic-month"/>
             <div class="transactions-section">
@@ -53,6 +64,7 @@ const {currentBalance, isTransactionsLoading, transactions} = useDashboard()
     display: flex;
     flex-direction: column;
     background-color: #f8fafc;
+    position: relative;
 }
 
 .dashboard-main {
