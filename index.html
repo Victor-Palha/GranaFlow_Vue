@@ -1,17 +1,45 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>GranaFlow | Controle Financeiro Pessoal e Gestão de Gastos</title>
+    <meta name="description" content="GranaFlow: A solução completa para gerenciar suas finanças pessoais. Controle de gastos, orçamento mensal e relatórios inteligentes em uma plataforma intuitiva.">
+    <meta name="keywords" content="finanças pessoais, controle financeiro, gestão de gastos, orçamento mensal, economia, GranaFlow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta property="og:title" content="GranaFlow | Controle Financeiro Inteligente">
+    <meta property="og:description" content="Transforme sua relação com o dinheiro com nossa plataforma de gestão financeira pessoal.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://granaflow.onrender.com">
+    <meta property="og:image" content="https://granaflow.onrender.com/granaflow-social-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <link rel="icon" href="/logo_web.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+IT+Trad:wght@100..400&display=swap" rel="stylesheet">
-    <script src="https://sdk.mercadopago.com/js/v2"></script>
-    <link rel="icon" href="/logo_web.svg">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GranaFlow</title>
+    <link rel="preload" href="/src/main.ts" as="script">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "GranaFlow",
+      "description": "Plataforma de gestão financeira pessoal",
+      "url": "https://granaflow.onrender.com",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web"
+    }
+    </script>
+    <script async src="https://sdk.mercadopago.com/js/v2"></script>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <div id="app" role="main"></div>
+    <script type="module" src="/src/main.ts" defer></script>
+    <noscript>
+      <img src="https://analytics.granaflow.com/track?noscript" alt="" style="display:none"/>
+    </noscript>
   </body>
 </html>
