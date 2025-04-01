@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import { useAPI } from "./useApi";
 import { useTransactionStore } from "@/stores/transactions";
+import type { Transaction } from "@/types/transactions";
 
 export function useTransactionManager(){
     const {refetchTransactions} = useTransactionStore()
@@ -35,8 +36,24 @@ export function useTransactionManager(){
         }
     }
 
+    async function handleEditTransaction(transactionId: number, walletId: number, transaction: Transaction){
+        const api = await useAPI()
+        if(!api){
+            return
+        }
+        try{
+            await api.server.patch(`/api/transaction/${transactionId}/${walletId}`, transaction)
+            refetchTransactions()
+        } catch(error){
+            if(error instanceof AxiosError){
+                console.log(error.response?.data.message)
+            }
+        }
+    }
+
     return {
         handleDeleteTransaction,
-        handleGetTransaction
+        handleGetTransaction,
+        handleEditTransaction
     }
 }

@@ -15,10 +15,12 @@ import {
   DocumentTextIcon,
   CalendarIcon,
   WalletIcon,
-  PaperClipIcon
+  PaperClipIcon,
+  PencilSquareIcon
 } from '@heroicons/vue/24/outline'
 import type { Transaction } from '@/types/transactions'
 import { computed, ref } from 'vue';
+import { formatarDataBr } from '@/utils/formatDate';
 
 const props = defineProps<{
   transaction: Transaction
@@ -37,6 +39,7 @@ const isOpen = computed({
 })
 
 const isDeleting = ref(false)
+const isEditing = ref(false)
 
 const amountFormatted = computed(() => {
   return new Intl.NumberFormat('pt-BR', {
@@ -45,19 +48,20 @@ const amountFormatted = computed(() => {
   }).format(parseFloat(props.transaction.amount))
 })
 
-const dateFormatted = computed(() => {
-  return new Date(props.transaction.transaction_date).toLocaleDateString('pt-BR', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-  })
-})
-
 const hasProof = computed(() => {
   return !!props.transaction.proof_url
 })
 
-async function handleDeleteTransaction(){
+const editedTransaction = ref({
+  name: props.transaction.name,
+  description: props.transaction.description,
+  amount: props.transaction.amount,
+  transaction_date: props.transaction.transaction_date,
+  subtype: props.transaction.subtype,
+  type: props.transaction.type
+})
+
+async function handleDeleteTransaction() {
   isDeleting.value = true
   try {
     emit('delete', props.transaction.id)
@@ -65,6 +69,36 @@ async function handleDeleteTransaction(){
   } finally {
     isDeleting.value = false
   }
+}
+
+async function handleEditTransaction() {
+  isEditing.value = true
+  try {
+    const updatedTransaction = {
+      ...props.transaction,
+      ...editedTransaction.value
+    }
+    emit('edit', updatedTransaction)
+    isOpen.value = false
+  } finally {
+    isEditing.value = false
+  }
+}
+
+function startEditing() {
+  editedTransaction.value = {
+    name: props.transaction.name,
+    description: props.transaction.description,
+    amount: props.transaction.amount,
+    transaction_date: props.transaction.transaction_date,
+    subtype: props.transaction.subtype,
+    type: props.transaction.type
+  }
+  isEditing.value = true
+}
+
+function cancelEditing() {
+  isEditing.value = false
 }
 </script>
 
@@ -75,7 +109,7 @@ async function handleDeleteTransaction(){
       <DialogContent class="DialogContent">
         <div class="DialogHeader">
           <DialogTitle class="DialogTitle">
-            Detalhes da Transação
+            {{ isEditing ? 'Editar Transação' : 'Detalhes da Transação' }}
           </DialogTitle>
           <DialogClose class="IconButton" aria-label="Fechar">
             <XMarkIcon class="Icon" />
@@ -91,7 +125,13 @@ async function handleDeleteTransaction(){
                 </div>
                 <div class="InfoTextContainer">
                   <h3 class="InfoLabel">Nome</h3>
-                  <p class="InfoValue">{{ transaction.name }}</p>
+                  <input
+                    v-if="isEditing"
+                    v-model="editedTransaction.name"
+                    class="EditInput"
+                    type="text"
+                  >
+                  <p v-else class="InfoValue">{{ transaction.name }}</p>
                 </div>
               </div>
 
@@ -101,7 +141,12 @@ async function handleDeleteTransaction(){
                 </div>
                 <div class="InfoTextContainer">
                   <h3 class="InfoLabel">Descrição</h3>
-                  <p class="InfoValue">{{ transaction.description || 'Nenhuma descrição fornecida' }}</p>
+                  <textarea
+                    v-if="isEditing"
+                    v-model="editedTransaction.description"
+                    class="EditTextarea"
+                  />
+                  <p v-else class="InfoValue">{{ transaction.description || 'Nenhuma descrição fornecida' }}</p>
                 </div>
               </div>
 
@@ -111,7 +156,13 @@ async function handleDeleteTransaction(){
                 </div>
                 <div class="InfoTextContainer">
                   <h3 class="InfoLabel">Data</h3>
-                  <p class="InfoValue">{{ dateFormatted }}</p>
+                  <input
+                    v-if="isEditing"
+                    v-model="editedTransaction.transaction_date"
+                    class="EditInput"
+                    type="date"
+                  >
+                  <p v-else class="InfoValue">{{ formatarDataBr(props.transaction.transaction_date ) }}</p>
                 </div>
               </div>
 
@@ -146,7 +197,14 @@ async function handleDeleteTransaction(){
             <div class="FinancialSection">
               <div class="AmountDisplay" :class="transaction.type">
                 <span class="AmountType">{{ transaction.type === 'INCOME' ? 'Receita' : 'Despesa' }}</span>
-                <span class="Amount">{{ amountFormatted }}</span>
+                <input
+                  v-if="isEditing"
+                  v-model="editedTransaction.amount"
+                  class="EditInput amount"
+                  type="number"
+                  step="0.01"
+                >
+                <span v-else class="Amount">{{ amountFormatted }}</span>
               </div>
 
               <div class="SubtypeDisplay">
@@ -159,6 +217,31 @@ async function handleDeleteTransaction(){
 
         <div class="DialogFooter">
           <button 
+            v-if="!isEditing"
+            @click="startEditing" 
+            class="Button primary"
+          >
+            <PencilSquareIcon class="ButtonIcon" />
+            Editar
+          </button>
+          
+          <template v-if="isEditing">
+            <button 
+              @click="cancelEditing" 
+              class="Button muted"
+            >
+              Cancelar
+            </button>
+            <button 
+              @click="handleEditTransaction" 
+              class="Button primary"
+            >
+              Salvar
+            </button>
+          </template>
+          
+          <button 
+            v-if="!isEditing"
             @click="handleDeleteTransaction" 
             class="Button danger" 
             :disabled="isDeleting"
@@ -416,6 +499,50 @@ async function handleDeleteTransaction(){
 .ButtonIcon {
   width: 16px;
   height: 16px;
+}
+
+.EditInput,
+.EditTextarea,
+.EditSelect {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  font-size: 0.9375rem;
+  transition: border-color 0.2s ease;
+}
+
+.EditInput:focus,
+.EditTextarea:focus,
+.EditSelect:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.EditTextarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.EditInput.amount {
+  max-width: 120px;
+  text-align: right;
+}
+
+.EditSelect {
+  background-color: white;
+  cursor: pointer;
+}
+
+.Button.muted {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  border: 1px solid #e5e7eb;
+}
+
+.Button.muted:hover {
+  background-color: #e5e7eb;
 }
 
 @keyframes overlayShow {
