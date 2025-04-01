@@ -8,6 +8,7 @@ import {
   ArrowTrendingDownIcon
 } from '@heroicons/vue/24/outline'
 import useCustomToast from '@/composables/useCustomToast'
+import { formatarDataBr } from '@/utils/formatDate'
 
 const props = defineProps<{
   data: Transaction
@@ -17,8 +18,9 @@ const emit = defineEmits(['deleted', 'edit'])
 
 const isOpen = ref(false)
 const isDeleting = ref(false)
+const isEditing = ref(false)
 
-const { handleDeleteTransaction } = useTransactionManager()
+const { handleDeleteTransaction, handleEditTransaction } = useTransactionManager()
 const {showSuccess, showError} = useCustomToast()
 
 const amountFormatted = new Intl.NumberFormat('pt-BR', {
@@ -46,6 +48,21 @@ async function onDeleteTransaction(){
   }
 }
 
+async function onUpdateTransaction(updatedTransaction: Transaction){
+  if (!confirm('Tem certeza que deseja editar esta transação?')) return
+  isEditing.value = true
+  try {
+    await handleEditTransaction(props.data.id, props.data.wallet_id, updatedTransaction)
+    emit('edit', props.data.id)
+    showSuccess("Sua transação foi atualizada com sucesso!")
+    isOpen.value = false
+  }catch(error){
+    showError("Um erro inesperado ocorreu enquanto tentavamos editar sua transação.")
+  } finally {
+    isEditing.value = false
+  }
+}
+
 </script>
 
 <template>
@@ -68,7 +85,7 @@ async function onDeleteTransaction(){
         {{ amountFormatted }}
       </p>
       <span class="date-transaction">
-        {{ new Date(data.transaction_date).toLocaleDateString('pt-BR') }}
+        {{ formatarDataBr(data.transaction_date ) }}
       </span>
     </div>
   </div>
@@ -79,6 +96,7 @@ async function onDeleteTransaction(){
     :is-deleting="isDeleting"
     @update:open="isOpen = $event"
     @delete="onDeleteTransaction"
+    @edit="onUpdateTransaction"
   />
 </template>
 
