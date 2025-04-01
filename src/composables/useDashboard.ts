@@ -31,20 +31,22 @@ export function useDashboard(){
     }
 
     function groupTransactionsByMonth(transactions: Transaction[]) {
-        const transactionsSepared = transactions.reduce<Record<string, Transaction[]>>((acc, transaction) => {
-          const date = new Date(transaction.transaction_date);
-          const month = date.getMonth() + 1;
-          const year = date.getFullYear();
-          const label = `${MONTHS[month]} ${year}`;
-      
-          if (!acc[label]) {
-            acc[label] = [];
-          }
-      
-          acc[label].push(transaction);
-          return acc;
-        }, {});
-        transactionsSeparedByMonths.value = transactionsSepared
+      const transactionsSepared = transactions.reduce<Record<string, Transaction[]>>((acc, transaction) => {
+        const [yearStr, monthStr, _] = transaction.transaction_date.split('-');
+        const year = parseInt(yearStr, 10);
+        const month = parseInt(monthStr, 10);
+    
+        const label = `${MONTHS[month]} ${year}`;
+    
+        if (!acc[label]) {
+          acc[label] = [];
+        }
+    
+        acc[label].push(transaction);
+        return acc;
+      }, {});
+    
+      transactionsSeparedByMonths.value = transactionsSepared;
     }
 
     watch(myTransactions, ()=>{
