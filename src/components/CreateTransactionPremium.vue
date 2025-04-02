@@ -187,6 +187,8 @@ loadCustomSubtypes()
                 <option value="Investimentos">Investimentos</option>
                 <option value="Salário">Salário</option>
                 <option value="Doações">Doações</option>
+                <option value="Pet">Pet</option>
+                <option value="Comunicação">Comunicação</option>
             </select>
         </fieldset>
 
