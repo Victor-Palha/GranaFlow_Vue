@@ -1,55 +1,93 @@
-# GranaFlow_Vue
+# GranaFlow
 
-This template should help get you started developing with Vue 3 in Vite.
+GranaFlow is a personal finance management platform designed to help users take control of their finances. With an intuitive interface and powerful tools, GranaFlow enables users to track expenses, manage budgets, and gain insights into their financial habits.
 
-## Recommended IDE Setup
+![GranaFlow Screenshot](./docs/1.png)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Key Features
 
-## Type Support for `.vue` Imports in TS
+### 1. **User Profile Management**
+- Securely store user information such as:
+  - User ID
+  - Email
+  - Name
+  - Profile Photo
+- Manage authentication tokens (JWT and Refresh Tokens) for secure access.
+- Premium account support for advanced features.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+### 2. **Expense Tracking**
+- Log and categorize expenses to understand spending habits.
+- View detailed reports and summaries of financial activity.
 
-## Customize configuration
+### 3. **Budget Management**
+- Set monthly budgets and track progress.
+- Receive alerts when nearing budget limits.
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+### 4. **Data Persistence**
+- Utilizes `LocalStoragePersistence` to securely store user data locally.
+- Functions include:
+  - `setUserProfile()`: Save user profile data.
+  - `getUserProfile()`: Retrieve user profile data.
+  - `deleteAll()`: Clear all stored data.
 
-## Project Setup
+### 5. **Responsive Web Application**
+- Fully responsive design for seamless use on desktop and mobile devices.
+- Built with Vue.js for a modern and dynamic user experience.
 
-```sh
-npm install
-```
+### 6. **Integration with Mercado Pago**
+- Supports Mercado Pago SDK for secure payment processing.
 
-### Compile and Hot-Reload for Development
+### 7. **SEO and Social Sharing**
+- Optimized for search engines with meta tags for descriptions, keywords, and Open Graph properties.
+- Social sharing preview with a custom image and description.
 
-```sh
-npm run dev
-```
+### 8. **Analytics**
+- Tracks user interactions and provides insights via analytics integration.
 
-### Type-Check, Compile and Minify for Production
+## Technologies Used
+- **Frontend**: Vue.js
+- **Backend**: Integration with APIs for authentication and data management.
+- **Storage**: LocalStorage for user data persistence.
+- **Payment Gateway**: Mercado Pago SDK.
+- **Styling**: Google Fonts and custom styles for a polished UI.
 
-```sh
+## Getting Started
+
+### Prerequisites
+- Node.js and npm installed on your machine.
+
+### Installation
+1. Clone the repository:
+2. Navigate to the project directory:
+   ```bash
+   cd GranaFlow_Vue
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Running the Application
+1. Start the development server:
+   ```bash
+   npm run dev
+   ```
+2. Open your browser and navigate to `http://localhost:5173`.
+
+### Building for Production
+To build the application for production:
+```bash
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+## Project Structure
+- **`src/`**: Contains the source code for the application.
+  - **`stores/localStoragePersistence.ts`**: Handles local storage operations for user data.
+  - **`main.ts`**: Entry point for the application.
+- **`index.html`**: Main HTML file with meta tags, SEO configurations, and script imports.
 
-```sh
-npm run test:unit
-```
+## Contributing
+Contributions are welcome! Please fork the repository and submit a pull request with your changes.
 
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-npm run build
-npm run test:e2e
-```
+## License
+This project is licensed under the MIT License. See the `LICENSE` file for details.
